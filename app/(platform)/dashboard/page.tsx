@@ -47,7 +47,7 @@ export default async function DashboardPage() {
     .eq("is_completed", true);
 
   const completedLessonIds = new Set(
-    (allProgress || []).map((p: any) => p.lesson_id)
+    (allProgress || []).map((p: unknown) => p.lesson_id)
   );
 
   // Get certificates
@@ -59,10 +59,10 @@ export default async function DashboardPage() {
     .limit(5);
 
   // Calculate per-course progress
-  const coursesWithProgress = (enrollments || []).map((e: any) => {
+  const coursesWithProgress = (enrollments || []).map((e: unknown) => {
     const course = e.courses;
-    const allLessonIds = (course.modules || []).flatMap((m: any) =>
-      (m.lessons || []).map((l: any) => l.id)
+    const allLessonIds = (course.modules || []).flatMap((m: { lessons?: { id: string }[] }) =>
+      (m.lessons || []).map((l: { id: string }) => l.id)
     );
     const totalLessons = allLessonIds.length;
     const completedLessons = allLessonIds.filter((id: string) =>
@@ -146,7 +146,7 @@ export default async function DashboardPage() {
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {coursesWithProgress.map((course: any) => (
+            {coursesWithProgress.map((course: unknown) => (
               <Link
                 key={course.id}
                 href={`/learn/${course.slug}`}
@@ -200,14 +200,14 @@ export default async function DashboardPage() {
         <div>
           <h2 className="text-xl font-semibold mb-4">Recent Certificates</h2>
           <div className="space-y-2">
-            {certificates.map((cert: any) => (
+            {certificates.map((cert: unknown) => (
               <div
                 key={cert.id}
                 className="flex items-center justify-between p-4 bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl"
               >
                 <div>
                   <p className="font-medium">
-                    {(cert.courses as any)?.title}
+                    {(cert.courses as unknown)?.title}
                   </p>
                   <p className="text-sm text-zinc-500">
                     #{cert.certificate_number} ·{" "}

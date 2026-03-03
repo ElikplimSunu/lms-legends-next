@@ -56,7 +56,7 @@ export function RegisterForm() {
             autoComplete="new-password" 
             required 
           />
-          <p className="text-xs text-zinc-500">Must be at least 6 characters.</p>
+          <p className="text-xs text-muted-foreground">Must be at least 6 characters.</p>
         </div>
 
         <div className="space-y-2">
@@ -77,9 +77,9 @@ export function RegisterForm() {
         {isPending ? "Creating account..." : "Sign up"}
       </Button>
 
-      <div className="text-center text-sm text-zinc-500 dark:text-zinc-400 mt-4">
+      <div className="text-center text-sm text-muted-foreground dark:text-muted-foreground mt-4">
         Already have an account?{" "}
-        <Link href="/login" className="font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400">
+        <Link href="/login" className="font-medium text-primary hover:text-primary/80 dark:text-primary/70">
           Sign in
         </Link>
       </div>

@@ -77,18 +77,18 @@ export default async function CourseDetailPage({
   const isEnrolled = !!enrollment;
 
   // Sort
-  course.modules?.sort((a: any, b: any) => a.sort_order - b.sort_order);
-  course.modules?.forEach((mod: any) => {
-    mod.lessons?.sort((a: any, b: any) => a.sort_order - b.sort_order);
+  course.modules?.sort((a: unknown, b: unknown) => a.sort_order - b.sort_order);
+  course.modules?.forEach((mod: unknown) => {
+    mod.lessons?.sort((a: unknown, b: unknown) => a.sort_order - b.sort_order);
   });
 
   const totalLessons =
     course.modules?.reduce(
-      (acc: number, mod: any) => acc + (mod.lessons?.length || 0),
+      (acc: number, mod: unknown) => acc + (mod.lessons?.length || 0),
       0
     ) || 0;
 
-  const instructor = course.profiles as any;
+  const instructor = course.profiles as unknown;
 
   return (
     <div className="flex-1">
@@ -167,7 +167,7 @@ export default async function CourseDetailPage({
           </h2>
 
           <div className="space-y-4">
-            {course.modules?.map((module: any, index: number) => (
+            {course.modules?.map((module: unknown, index: number) => (
               <div
                 key={module.id}
                 className="border border-zinc-200 dark:border-zinc-800 rounded-xl overflow-hidden"
@@ -181,7 +181,7 @@ export default async function CourseDetailPage({
                   </span>
                 </div>
                 <div className="divide-y divide-zinc-200 dark:divide-zinc-800">
-                  {module.lessons?.map((lesson: any) => (
+                  {module.lessons?.map((lesson: unknown) => (
                     <div
                       key={lesson.id}
                       className="p-4 flex items-center justify-between hover:bg-zinc-50 dark:hover:bg-zinc-900/30 transition"

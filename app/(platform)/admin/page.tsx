@@ -95,7 +95,7 @@ export default async function AdminDashboardPage() {
         <div className="bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl p-6">
           <h2 className="font-semibold text-lg mb-4">Recent Users</h2>
           <div className="space-y-3">
-            {(recentUsers || []).map((u: any) => (
+            {(recentUsers || []).map((u: unknown) => (
               <div
                 key={u.id}
                 className="flex items-center justify-between text-sm"
@@ -119,11 +119,11 @@ export default async function AdminDashboardPage() {
             <p className="text-sm text-zinc-500">No courses pending review.</p>
           ) : (
             <div className="space-y-3">
-              {pendingCourses.map((c: any) => (
+              {pendingCourses.map((c: unknown) => (
                 <div key={c.id} className="text-sm">
                   <p className="font-medium">{c.title}</p>
                   <p className="text-xs text-zinc-500">
-                    by {(c.profiles as any)?.full_name} ·{" "}
+                    by {(c.profiles as unknown)?.full_name} ·{" "}
                     {new Date(c.created_at).toLocaleDateString()}
                   </p>
                 </div>

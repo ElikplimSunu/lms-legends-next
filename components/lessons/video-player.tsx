@@ -50,9 +50,9 @@ export function VideoPlayer({
   if (isLocked) {
     return (
       <div className="flex bg-zinc-950 text-white flex-col gap-y-2 items-center justify-center aspect-video rounded-md border border-zinc-800">
-        <Lock className="w-8 h-8 text-zinc-500" />
+        <Lock className="w-8 h-8 text-muted-foreground" />
         <p className="text-sm font-medium">This lesson is locked.</p>
-        <p className="text-xs text-zinc-400">
+        <p className="text-xs text-muted-foreground">
           Please enroll in the course to view.
         </p>
       </div>

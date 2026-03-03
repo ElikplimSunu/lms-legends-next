@@ -62,7 +62,7 @@ export function ThumbnailUpload({ courseId, currentUrl, onUploaded }: ThumbnailU
     <div className="space-y-3">
       <label className="text-sm font-medium">Course Thumbnail</label>
       <div
-        className="relative group w-full aspect-video rounded-xl border-2 border-dashed border-zinc-200 dark:border-zinc-800 hover:border-zinc-400 dark:hover:border-zinc-600 transition-colors cursor-pointer overflow-hidden bg-zinc-50 dark:bg-zinc-900/50"
+        className="relative group w-full aspect-video rounded-xl border-2 border-dashed border-border dark:border-border hover:border-zinc-400 dark:hover:border-zinc-600 transition-colors cursor-pointer overflow-hidden bg-muted/50 dark:bg-muted/50"
         onClick={() => fileInputRef.current?.click()}
       >
         {preview ? (
@@ -73,7 +73,7 @@ export function ThumbnailUpload({ courseId, currentUrl, onUploaded }: ThumbnailU
             </div>
           </>
         ) : (
-          <div className="flex flex-col items-center justify-center h-full gap-2 text-zinc-400">
+          <div className="flex flex-col items-center justify-center h-full gap-2 text-muted-foreground">
             <ImageIcon className="w-8 h-8" />
             <p className="text-sm">Click to upload thumbnail</p>
             <p className="text-xs">PNG, JPG, WebP · Max 5MB</p>
@@ -91,6 +91,9 @@ export function ThumbnailUpload({ courseId, currentUrl, onUploaded }: ThumbnailU
         type="file"
         accept="image/*"
         className="hidden"
+        title="Upload course thumbnail"
+        placeholder="Upload an image"
+        aria-label="Upload course thumbnail"
         onChange={handleFileChange}
       />
     </div>

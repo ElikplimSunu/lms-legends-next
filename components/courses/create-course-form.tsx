@@ -36,7 +36,7 @@ export function CreateCourseForm() {
           required 
           disabled={isPending}
         />
-        <p className="text-xs text-zinc-500">
+        <p className="text-xs text-muted-foreground">
           This will be the main heading on your course landing page.
         </p>
       </div>
@@ -65,7 +65,7 @@ export function CreateCourseForm() {
           required 
           disabled={isPending}
         />
-        <p className="text-xs text-zinc-500">
+        <p className="text-xs text-muted-foreground">
           Set strictly to 0 to make the course free.
         </p>
       </div>

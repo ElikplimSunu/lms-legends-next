@@ -9,7 +9,7 @@ import { useState, useCallback, useTransition } from "react";
 import { toast } from "sonner";
 
 interface LessonPlayerProps {
-  lesson: any;
+  lesson: unknown;
   courseSlug: string;
   courseId: string;
   isEnrolled: boolean;
@@ -17,7 +17,7 @@ interface LessonPlayerProps {
   isCompleted: boolean;
   playbackToken?: string;
   nextLessonId?: string;
-  attachments: any[];
+  attachments: unknown[];
 }
 
 export function LessonPlayer({
@@ -89,8 +89,8 @@ export function LessonPlayer({
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold tracking-tight">{lesson.title}</h1>
-          <p className="text-sm text-zinc-500 mt-1">
-            {(lesson.modules as any)?.title}
+          <p className="text-sm text-muted-foreground mt-1">
+            {(lesson.modules as unknown)?.title}
           </p>
         </div>
         <div className="flex items-center gap-3">
@@ -117,33 +117,33 @@ export function LessonPlayer({
 
       {/* Lesson Content (Markdown) */}
       {lesson.content_markdown && (
-        <div className="prose dark:prose-invert max-w-none bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl p-6">
+        <div className="prose dark:prose-invert max-w-none bg-card text-card-foreground border border-border dark:border-border rounded-xl p-6">
           <div dangerouslySetInnerHTML={{ __html: lesson.content_markdown }} />
         </div>
       )}
 
       {/* Attachments */}
       {attachments.length > 0 && (
-        <div className="bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl p-6">
+        <div className="bg-card text-card-foreground border border-border dark:border-border rounded-xl p-6">
           <h3 className="font-semibold mb-4">Attachments</h3>
           <div className="space-y-2">
-            {attachments.map((file: any) => (
+            {attachments.map((file: unknown) => (
               <a
                 key={file.id}
                 href={file.file_url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-3 p-3 rounded-lg hover:bg-zinc-50 dark:hover:bg-zinc-900 transition border border-zinc-100 dark:border-zinc-800"
+                className="flex items-center gap-3 p-3 rounded-lg hover:bg-muted/50 dark:hover:bg-zinc-900 transition border border-border dark:border-border"
               >
-                <FileText className="w-5 h-5 text-blue-500 flex-shrink-0" />
+                <FileText className="w-5 h-5 text-primary flex-shrink-0" />
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium truncate">{file.file_name}</p>
-                  <p className="text-xs text-zinc-500">
+                  <p className="text-xs text-muted-foreground">
                     {file.file_type}
                     {file.file_size_bytes && ` · ${(file.file_size_bytes / 1024).toFixed(0)} KB`}
                   </p>
                 </div>
-                <Download className="w-4 h-4 text-zinc-400" />
+                <Download className="w-4 h-4 text-muted-foreground" />
               </a>
             ))}
           </div>

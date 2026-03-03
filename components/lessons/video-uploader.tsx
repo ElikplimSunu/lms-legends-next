@@ -30,10 +30,10 @@ export function VideoUploader({ lessonId, courseId, onSuccess }: VideoUploaderPr
 
   if (!uploadUrl) {
     return (
-      <div className="rounded-xl border border-dashed border-zinc-200 bg-transparent p-6 text-center dark:border-zinc-800 flex flex-col items-center justify-center">
-        <Video className="h-10 w-10 text-zinc-400 mb-4" />
+      <div className="rounded-xl border border-dashed border-border bg-transparent p-6 text-center dark:border-border flex flex-col items-center justify-center">
+        <Video className="h-10 w-10 text-muted-foreground mb-4" />
         <h3 className="font-semibold mb-1">Upload a video</h3>
-        <p className="text-sm text-zinc-500 mb-4">Click below to start an upload</p>
+        <p className="text-sm text-muted-foreground mb-4">Click below to start an upload</p>
         <button
             onClick={initializeUpload}
             disabled={isInitializing}
@@ -46,7 +46,7 @@ export function VideoUploader({ lessonId, courseId, onSuccess }: VideoUploaderPr
   }
 
   return (
-    <div className="rounded-xl border border-zinc-200 bg-white p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-950">
+    <div className="rounded-xl border border-border bg-white p-6 shadow-sm dark:border-border dark:bg-background">
         <MuxUploader
             endpoint={uploadUrl}
             onSuccess={() => {
@@ -60,7 +60,7 @@ export function VideoUploader({ lessonId, courseId, onSuccess }: VideoUploaderPr
             }}
             className="w-full"
         />
-        <p className="text-xs text-zinc-500 mt-4 text-center">
+        <p className="text-xs text-muted-foreground mt-4 text-center">
             Upload progress is shown above. Please do not close this window until complete.
         </p>
     </div>

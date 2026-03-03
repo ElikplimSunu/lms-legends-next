@@ -50,7 +50,7 @@ export function ProfileForm({ initialProfile }: { initialProfile: Partial<Profil
         
         <div>
           <h3 className="text-lg font-medium">Profile Picture</h3>
-          <p className="text-sm text-zinc-500 mb-4">Click the avatar or button below to upload a new one.</p>
+          <p className="text-sm text-muted-foreground mb-4">Click the avatar or button below to upload a new one.</p>
           <form action={avatarAction} className="flex items-center space-x-2">
             <Input 
               id="avatar-upload" 
@@ -96,9 +96,9 @@ export function ProfileForm({ initialProfile }: { initialProfile: Partial<Profil
               type="email" 
               defaultValue={initialProfile.email || ""} 
               disabled 
-              className="bg-zinc-50 dark:bg-zinc-900 border-zinc-200"
+              className="bg-muted/50 dark:bg-muted border-border"
             />
-            <p className="text-xs text-zinc-500">Your email address is managed via your account settings.</p>
+            <p className="text-xs text-muted-foreground">Your email address is managed via your account settings.</p>
           </div>
           
           <div className="grid gap-2">
@@ -110,7 +110,7 @@ export function ProfileForm({ initialProfile }: { initialProfile: Partial<Profil
               defaultValue={initialProfile.bio || ""}
               className="min-h-[120px]"
             />
-            <p className="text-xs text-zinc-500">Maximum 500 characters.</p>
+            <p className="text-xs text-muted-foreground">Maximum 500 characters.</p>
           </div>
         </div>
         

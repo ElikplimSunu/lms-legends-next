@@ -1,0 +1,251 @@
+
+> lms-legends-next@0.1.0 lint /Users/macbookpro/Documents/Coding/LegendsPortfolio/lms-legends-next
+> eslint
+
+
+/Users/macbookpro/Documents/Coding/LegendsPortfolio/lms-legends-next/actions/auth.ts
+  113:36  warning  '_formData' is defined but never used  @typescript-eslint/no-unused-vars
+
+/Users/macbookpro/Documents/Coding/LegendsPortfolio/lms-legends-next/actions/certificates.ts
+  78:37  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  78:74  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  79:39  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  80:38  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/macbookpro/Documents/Coding/LegendsPortfolio/lms-legends-next/actions/courses.ts
+  16:16  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  18:25  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  73:16  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  94:42  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/macbookpro/Documents/Coding/LegendsPortfolio/lms-legends-next/actions/lessons.ts
+   15:16  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   17:25  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   85:16  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   87:25  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  113:24  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  135:14  warning  'error' is defined but never used         @typescript-eslint/no-unused-vars
+  177:14  warning  'error' is defined but never used         @typescript-eslint/no-unused-vars
+
+/Users/macbookpro/Documents/Coding/LegendsPortfolio/lms-legends-next/actions/modules.ts
+   14:16  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   16:25  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   83:16  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   85:25  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  112:24  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  129:14  warning  'error' is defined but never used         @typescript-eslint/no-unused-vars
+  173:14  warning  'error' is defined but never used         @typescript-eslint/no-unused-vars
+
+/Users/macbookpro/Documents/Coding/LegendsPortfolio/lms-legends-next/actions/progress.ts
+   82:25  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  102:43  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  103:35  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/macbookpro/Documents/Coding/LegendsPortfolio/lms-legends-next/actions/quizzes.ts
+   11:25  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   23:31  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   57:25  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  117:84  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  160:51  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  184:25  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  201:30  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  243:36  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  252:67  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/macbookpro/Documents/Coding/LegendsPortfolio/lms-legends-next/actions/video.ts
+  5:10  warning  'z' is defined but never used  @typescript-eslint/no-unused-vars
+
+/Users/macbookpro/Documents/Coding/LegendsPortfolio/lms-legends-next/app/(platform)/admin/courses/page.tsx
+   4:10  warning  'CheckCircle' is defined but never used         @typescript-eslint/no-unused-vars
+   4:23  warning  'XCircle' is defined but never used             @typescript-eslint/no-unused-vars
+  20:46  error    Unexpected any. Specify a different type        @typescript-eslint/no-explicit-any
+  21:9   warning  'published' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  21:48  error    Unexpected any. Specify a different type        @typescript-eslint/no-explicit-any
+  42:35  error    Unexpected any. Specify a different type        @typescript-eslint/no-explicit-any
+  50:45  error    Unexpected any. Specify a different type        @typescript-eslint/no-explicit-any
+  81:45  error    Unexpected any. Specify a different type        @typescript-eslint/no-explicit-any
+  85:42  error    Unexpected any. Specify a different type        @typescript-eslint/no-explicit-any
+
+/Users/macbookpro/Documents/Coding/LegendsPortfolio/lms-legends-next/app/(platform)/admin/instructors/page.tsx
+  42:45  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  87:55  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/macbookpro/Documents/Coding/LegendsPortfolio/lms-legends-next/app/(platform)/admin/page.tsx
+   98:42  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  122:39  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  126:40  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/macbookpro/Documents/Coding/LegendsPortfolio/lms-legends-next/app/(platform)/admin/users/page.tsx
+  2:10  warning  'redirect' is defined but never used  @typescript-eslint/no-unused-vars
+
+/Users/macbookpro/Documents/Coding/LegendsPortfolio/lms-legends-next/app/(platform)/courses/[courseId]/page.tsx
+   80:28  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   80:36  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   81:33  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   82:27  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   82:35  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   87:26  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   91:41  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  170:43  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  184:49  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/macbookpro/Documents/Coding/LegendsPortfolio/lms-legends-next/app/(platform)/dashboard/instructor/courses/[courseId]/modules/[moduleId]/lessons/[lessonId]/page.tsx
+  186:52  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  186:69  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/macbookpro/Documents/Coding/LegendsPortfolio/lms-legends-next/app/(platform)/dashboard/instructor/courses/[courseId]/modules/[moduleId]/page.tsx
+  128:61  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  128:69  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/macbookpro/Documents/Coding/LegendsPortfolio/lms-legends-next/app/(platform)/dashboard/instructor/courses/[courseId]/page.tsx
+    3:21  warning  'CheckCircle' is defined but never used   @typescript-eslint/no-unused-vars
+  111:54  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  111:62  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/macbookpro/Documents/Coding/LegendsPortfolio/lms-legends-next/app/(platform)/dashboard/instructor/courses/page.tsx
+  56:64  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+/Users/macbookpro/Documents/Coding/LegendsPortfolio/lms-legends-next/app/(platform)/dashboard/page.tsx
+   50:33  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+   62:59  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+   64:61  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+   65:33  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  149:47  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  158:23  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+  203:38  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  210:39  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+
+/Users/macbookpro/Documents/Coding/LegendsPortfolio/lms-legends-next/app/(platform)/learn/[courseSlug]/layout.tsx
+    5:10  warning  'Button' is defined but never used        @typescript-eslint/no-unused-vars
+   51:56  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   52:31  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   65:32  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   71:9   error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   71:17  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   73:29  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   74:25  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   74:33  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  116:39  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  121:45  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/macbookpro/Documents/Coding/LegendsPortfolio/lms-legends-next/app/(platform)/learn/[courseSlug]/lessons/[lessonId]/page.tsx
+   59:39  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  107:9   error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/macbookpro/Documents/Coding/LegendsPortfolio/lms-legends-next/app/(platform)/learn/[courseSlug]/page.tsx
+  35:17  warning  'enrollment' is assigned a value but never used                                                          @typescript-eslint/no-unused-vars
+  45:9   error    Unexpected any. Specify a different type                                                                 @typescript-eslint/no-explicit-any
+  45:17  error    Unexpected any. Specify a different type                                                                 @typescript-eslint/no-explicit-any
+  49:8   error    Do not assign to the variable `module`. See: https://nextjs.org/docs/messages/no-assign-module-variable  @next/next/no-assign-module-variable
+  51:11  error    Unexpected any. Specify a different type                                                                 @typescript-eslint/no-explicit-any
+  51:19  error    Unexpected any. Specify a different type                                                                 @typescript-eslint/no-explicit-any
+
+/Users/macbookpro/Documents/Coding/LegendsPortfolio/lms-legends-next/app/api/certificates/[certNumber]/route.ts
+  21:40  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  22:42  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/macbookpro/Documents/Coding/LegendsPortfolio/lms-legends-next/app/api/upload/attachment/route.ts
+  32:41  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/macbookpro/Documents/Coding/LegendsPortfolio/lms-legends-next/app/api/webhooks/mux/route.ts
+  38:20  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  41:69  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  42:27  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/macbookpro/Documents/Coding/LegendsPortfolio/lms-legends-next/components/admin/category-manager.tsx
+   6:16  warning  'Trash2' is defined but never used        @typescript-eslint/no-unused-vars
+  11:15  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  63:35  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/macbookpro/Documents/Coding/LegendsPortfolio/lms-legends-next/components/admin/user-management.tsx
+   3:20  warning  'useTransition' is defined but never used   @typescript-eslint/no-unused-vars
+   5:10  warning  'Button' is defined but never used          @typescript-eslint/no-unused-vars
+   6:18  warning  'MoreHorizontal' is defined but never used  @typescript-eslint/no-unused-vars
+  10:10  error    Unexpected any. Specify a different type    @typescript-eslint/no-explicit-any
+
+/Users/macbookpro/Documents/Coding/LegendsPortfolio/lms-legends-next/components/courses/course-card.tsx
+   7:11  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  13:69  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/macbookpro/Documents/Coding/LegendsPortfolio/lms-legends-next/components/courses/enroll-button.tsx
+  6:10  warning  'useState' is defined but never used  @typescript-eslint/no-unused-vars
+
+/Users/macbookpro/Documents/Coding/LegendsPortfolio/lms-legends-next/components/courses/modules-form.tsx
+  16:16  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/macbookpro/Documents/Coding/LegendsPortfolio/lms-legends-next/components/courses/modules-list.tsx
+  15:10  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/macbookpro/Documents/Coding/LegendsPortfolio/lms-legends-next/components/courses/thumbnail-upload.tsx
+  4:10  warning  'Upload' is defined but never used  @typescript-eslint/no-unused-vars
+  4:18  warning  'X' is defined but never used       @typescript-eslint/no-unused-vars
+  5:10  warning  'Button' is defined but never used  @typescript-eslint/no-unused-vars
+
+/Users/macbookpro/Documents/Coding/LegendsPortfolio/lms-legends-next/components/landing/landing-content.tsx
+  254:26  warning  'i' is defined but never used  @typescript-eslint/no-unused-vars
+
+/Users/macbookpro/Documents/Coding/LegendsPortfolio/lms-legends-next/components/lessons/file-upload.tsx
+  4:18  warning  'X' is defined but never used     @typescript-eslint/no-unused-vars
+  4:21  warning  'File' is defined but never used  @typescript-eslint/no-unused-vars
+
+/Users/macbookpro/Documents/Coding/LegendsPortfolio/lms-legends-next/components/lessons/lesson-player.tsx
+   12:11  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   20:16  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   93:33  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  130:37  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/macbookpro/Documents/Coding/LegendsPortfolio/lms-legends-next/components/lessons/lessons-form.tsx
+  14:16  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/macbookpro/Documents/Coding/LegendsPortfolio/lms-legends-next/components/lessons/lessons-list.tsx
+  15:10  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/macbookpro/Documents/Coding/LegendsPortfolio/lms-legends-next/components/lessons/video-player.tsx
+  21:3  warning  'courseId' is defined but never used  @typescript-eslint/no-unused-vars
+
+/Users/macbookpro/Documents/Coding/LegendsPortfolio/lms-legends-next/components/quizzes/quiz-form.tsx
+   27:50  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             @typescript-eslint/no-explicit-any
+   29:42  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             @typescript-eslint/no-explicit-any
+   39:7   error    Error: Cannot access variable before it is declared
+
+`handleSubmit` is accessed before it is declared, which prevents the earlier access from updating when this value changes over time.
+
+/Users/macbookpro/Documents/Coding/LegendsPortfolio/lms-legends-next/components/quizzes/quiz-form.tsx:39:7
+  37 |     if (state !== "in_progress" || !timeLeft) return;
+  38 |     if (timeLeft <= 0) {
+> 39 |       handleSubmit();
+     |       ^^^^^^^^^^^^ `handleSubmit` accessed before it is declared
+  40 |       return;
+  41 |     }
+  42 |     const interval = setInterval(() => {
+
+/Users/macbookpro/Documents/Coding/LegendsPortfolio/lms-legends-next/components/quizzes/quiz-form.tsx:78:3
+  76 |   };
+  77 |
+> 78 |   const handleSubmit = useCallback(() => {
+     |   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 79 |     if (!attemptData) return;
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 80 |     startTransition(async () => {
+     …
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 93 |     });
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 94 |   }, [attemptData, selectedAnswers]);
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ `handleSubmit` is declared here
+  95 |
+  96 |   const formatTime = (seconds: number) => {
+  97 |     const m = Math.floor(seconds / 60);  react-hooks/immutability
+   46:6   warning  React Hook useEffect has a missing dependency: 'handleSubmit'. Either include it or remove the dependency array                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      react-hooks/exhaustive-deps
+   81:53  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             @typescript-eslint/no-explicit-any
+  178:33  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             @typescript-eslint/no-explicit-any
+  179:52  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             @typescript-eslint/no-explicit-any
+  200:45  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             @typescript-eslint/no-explicit-any
+
+/Users/macbookpro/Documents/Coding/LegendsPortfolio/lms-legends-next/next.config.ts
+   3:23  error  A `require()` style import is forbidden                                                                              @typescript-eslint/no-require-imports
+  17:3   error  Use "@ts-expect-error" instead of "@ts-ignore", as "@ts-ignore" will do nothing if the following line is error-free  @typescript-eslint/ban-ts-comment
+
+✖ 136 problems (109 errors, 27 warnings)
+
+ ELIFECYCLE  Command failed with exit code 1.

@@ -11,7 +11,7 @@ import { PlusCircle } from "lucide-react";
 import { LessonsList } from "./lessons-list";
 
 interface LessonsFormProps {
-  initialData: any[]; // Assuming any[] right now
+  initialData: unknown[]; // Assuming any[] right now
   moduleId: string;
   courseId: string;
 }
@@ -25,7 +25,7 @@ export function LessonsForm({ initialData, moduleId, courseId }: LessonsFormProp
   // the bind method could work, but passing via hidden inputs is easier 
   // with native form submissions.
   // Wait, the createLessonAction requires `courseId` as the first param, let's look at its signature:
-  // export async function createLessonAction(courseId: string, prevState: any, formData: FormData)
+  // export async function createLessonAction(courseId: string, prevState: unknown, formData: FormData)
   const createLessonWithCourseId = createLessonAction.bind(null, courseId);
   const [state, action, isPending] = useActionState(createLessonWithCourseId, null);
 
@@ -64,7 +64,7 @@ export function LessonsForm({ initialData, moduleId, courseId }: LessonsFormProp
   };
 
   return (
-    <div className="relative mt-6 rounded-xl border border-zinc-200 bg-white p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-950">
+    <div className="relative mt-6 rounded-xl border border-border bg-white p-6 shadow-sm dark:border-border dark:bg-background">
       <div className="flex items-center justify-between font-medium">
         <h3 className="font-semibold mb-2">Module Lessons</h3>
         <Button onClick={toggleCreating} variant="ghost" size="sm">

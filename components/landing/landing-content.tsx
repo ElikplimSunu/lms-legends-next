@@ -21,19 +21,19 @@ export function LandingContent() {
               <span className="text-lg font-bold tracking-tight">LMS Legends</span>
             </Link>
 
-            <div className="hidden md:flex items-center gap-8 text-sm text-zinc-400">
+            <div className="hidden md:flex items-center gap-8 text-sm text-muted-foreground">
               <Link href="#features" className="hover:text-white transition-colors duration-300">Features</Link>
               <Link href="#how-it-works" className="hover:text-white transition-colors duration-300">How it works</Link>
               <Link href="#testimonials" className="hover:text-white transition-colors duration-300">Testimonials</Link>
             </div>
 
             <div className="flex items-center gap-3">
-              <Link href="/login" className="hidden sm:block text-sm text-zinc-400 hover:text-white transition-colors duration-300 px-4 py-2">
+              <Link href="/login" className="hidden sm:block text-sm text-muted-foreground hover:text-white transition-colors duration-300 px-4 py-2">
                 Sign in
               </Link>
               <Link
                 href="/register"
-                className="text-sm font-medium bg-white text-zinc-950 px-5 py-2.5 rounded-xl hover:bg-zinc-200 transition-all duration-300 hover:shadow-lg hover:shadow-white/10"
+                className="text-sm font-medium bg-white text-zinc-950 px-5 py-2.5 rounded-xl hover:bg-secondary transition-all duration-300 hover:shadow-lg hover:shadow-white/10"
               >
                 Get Started
               </Link>
@@ -77,7 +77,7 @@ export function LandingContent() {
 
           {/* Subheading */}
           <p
-            className="max-w-xl mx-auto text-lg sm:text-xl text-zinc-400 leading-relaxed mb-12"
+            className="max-w-xl mx-auto text-lg sm:text-xl text-muted-foreground leading-relaxed mb-12"
             style={{ animation: 'slide-up-reveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both' }}
           >
             The modern platform for mastering new skills. Premium video courses, 
@@ -91,14 +91,14 @@ export function LandingContent() {
           >
             <Link
               href="/register"
-              className="group flex items-center gap-2 bg-white text-zinc-950 px-8 py-4 rounded-2xl text-base font-semibold hover:bg-zinc-200 transition-all duration-300 hover:shadow-2xl hover:shadow-white/10 hover:-translate-y-0.5"
+              className="group flex items-center gap-2 bg-white text-zinc-950 px-8 py-4 rounded-2xl text-base font-semibold hover:bg-secondary transition-all duration-300 hover:shadow-2xl hover:shadow-white/10 hover:-translate-y-0.5"
             >
               Start learning free
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
             </Link>
             <Link
               href="#features"
-              className="flex items-center gap-2 text-zinc-400 px-8 py-4 rounded-2xl text-base font-medium border border-white/[0.08] hover:bg-white/[0.04] hover:text-white transition-all duration-300"
+              className="flex items-center gap-2 text-muted-foreground px-8 py-4 rounded-2xl text-base font-medium border border-white/[0.08] hover:bg-white/[0.04] hover:text-white transition-all duration-300"
             >
               <Play className="w-4 h-4" />
               See how it works
@@ -107,7 +107,7 @@ export function LandingContent() {
 
           {/* Social proof */}
           <div
-            className="mt-16 flex items-center justify-center gap-6 text-sm text-zinc-500"
+            className="mt-16 flex items-center justify-center gap-6 text-sm text-muted-foreground"
             style={{ animation: 'slide-up-reveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.5s both' }}
           >
             <div className="flex -space-x-2">
@@ -144,7 +144,7 @@ export function LandingContent() {
                 <div className="text-4xl md:text-5xl font-bold tracking-tight text-white mb-2">
                   {stat.value}
                 </div>
-                <div className="text-sm text-zinc-500 font-medium">{stat.label}</div>
+                <div className="text-sm text-muted-foreground font-medium">{stat.label}</div>
               </div>
             ))}
           </div>
@@ -159,7 +159,7 @@ export function LandingContent() {
             <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-6">
               Built for <span className="text-shimmer">serious</span> learners
             </h2>
-            <p className="text-lg text-zinc-400 max-w-2xl mx-auto">
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               Every detail is designed to help you retain more, learn faster, 
               and actually finish what you start.
             </p>
@@ -172,7 +172,7 @@ export function LandingContent() {
                 title: '4K Video Streaming',
                 description: 'Adaptive bitrate streaming powered by Mux. Buffer-free, any device, any connection.',
                 gradient: 'from-blue-500/20 to-cyan-500/20',
-                iconColor: 'text-blue-400',
+                iconColor: 'text-primary/70',
               },
               {
                 icon: Zap,
@@ -215,7 +215,7 @@ export function LandingContent() {
                   <feature.icon className={`w-6 h-6 ${feature.iconColor}`} />
                 </div>
                 <h3 className="text-lg font-semibold mb-3 text-white">{feature.title}</h3>
-                <p className="text-sm text-zinc-400 leading-relaxed">{feature.description}</p>
+                <p className="text-sm text-muted-foreground leading-relaxed">{feature.description}</p>
               </div>
             ))}
           </div>
@@ -258,7 +258,7 @@ export function LandingContent() {
                 </div>
                 <div>
                   <h3 className="text-2xl font-bold mb-3">{item.title}</h3>
-                  <p className="text-zinc-400 leading-relaxed max-w-lg">{item.description}</p>
+                  <p className="text-muted-foreground leading-relaxed max-w-lg">{item.description}</p>
                 </div>
               </div>
             ))}
@@ -309,7 +309,7 @@ export function LandingContent() {
                   </div>
                   <div>
                     <p className="text-sm font-semibold text-white">{testimonial.name}</p>
-                    <p className="text-xs text-zinc-500">{testimonial.role}</p>
+                    <p className="text-xs text-muted-foreground">{testimonial.role}</p>
                   </div>
                 </div>
               </div>
@@ -328,13 +328,13 @@ export function LandingContent() {
             <br />
             <span className="text-shimmer">a legend?</span>
           </h2>
-          <p className="text-lg text-zinc-400 mb-12 max-w-xl mx-auto">
+          <p className="text-lg text-muted-foreground mb-12 max-w-xl mx-auto">
             Join thousands of professionals who are already building the future. 
             Start for free, upgrade when you&apos;re ready.
           </p>
           <Link
             href="/register"
-            className="group inline-flex items-center gap-2 bg-white text-zinc-950 px-10 py-5 rounded-2xl text-lg font-semibold hover:bg-zinc-200 transition-all duration-300 hover:shadow-2xl hover:shadow-white/10 hover:-translate-y-1"
+            className="group inline-flex items-center gap-2 bg-white text-zinc-950 px-10 py-5 rounded-2xl text-lg font-semibold hover:bg-secondary transition-all duration-300 hover:shadow-2xl hover:shadow-white/10 hover:-translate-y-1"
           >
             Get started — it&apos;s free
             <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
@@ -351,12 +351,12 @@ export function LandingContent() {
             </div>
             <span className="font-bold tracking-tight">LMS Legends</span>
           </div>
-          <div className="flex gap-8 text-sm text-zinc-500">
+          <div className="flex gap-8 text-sm text-muted-foreground">
             <Link href="#" className="hover:text-white transition-colors duration-300">Terms</Link>
             <Link href="#" className="hover:text-white transition-colors duration-300">Privacy</Link>
             <Link href="#" className="hover:text-white transition-colors duration-300">Contact</Link>
           </div>
-          <p className="text-sm text-zinc-600">
+          <p className="text-sm text-muted-foreground">
             &copy; {new Date().getFullYear()} LMS Legends Inc.
           </p>
         </div>

@@ -125,7 +125,7 @@ export default async function ModuleSetupPage({
                {/* Lessons Builder */}
                <h2 className="text-xl font-bold mb-6">Lessons</h2>
                <LessonsForm
-                 initialData={courseModule.lessons.sort((a: any, b: any) => a.sort_order - b.sort_order)}
+                 initialData={courseModule.lessons.sort((a: unknown, b: unknown) => a.sort_order - b.sort_order)}
                  moduleId={moduleId}
                  courseId={courseId}
                />

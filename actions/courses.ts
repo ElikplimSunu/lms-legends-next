@@ -13,9 +13,9 @@ const courseSchema = z.object({
 });
 
 export async function createCourseAction(
-    prevState: any,
+    prevState: unknown,
     formData: FormData
-): Promise<ActionResult<any>> {
+): Promise<ActionResult<unknown>> {
     const supabase = await createServerClient();
     const { data: { user } } = await supabase.auth.getUser();
 
@@ -70,7 +70,7 @@ export async function createCourseAction(
 
 export async function updateCourseAction(
     courseId: string,
-    prevState: any,
+    prevState: unknown,
     formData: FormData
 ): Promise<ActionResult> {
     const supabase = await createServerClient();
@@ -91,7 +91,7 @@ export async function updateCourseAction(
         const validatedData = courseSchema.parse(rawData);
         const publishAction = formData.get("status") as string | null;
 
-        const updateData: Record<string, any> = {
+        const updateData: Record<string, unknown> = {
             title: validatedData.title,
             description: validatedData.description || null,
             category_id: validatedData.category_id || null,

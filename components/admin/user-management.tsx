@@ -7,7 +7,7 @@ import { Search, MoreHorizontal } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 interface UserManagementProps {
-  users: any[];
+  users: unknown[];
 }
 
 export function UserManagement({ users }: UserManagementProps) {
@@ -24,15 +24,15 @@ export function UserManagement({ users }: UserManagementProps) {
   const roleColors: Record<string, string> = {
     admin: "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400",
     instructor:
-      "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400",
+      "bg-primary/10 text-primary-foreground dark:bg-primary/20 dark:text-primary/70",
     student:
-      "bg-zinc-100 text-zinc-700 dark:bg-zinc-800 dark:text-zinc-400",
+      "bg-muted text-foreground dark:bg-secondary dark:text-muted-foreground",
   };
 
   return (
     <div className="space-y-4">
       <form onSubmit={handleSearch} className="relative max-w-md">
-        <Search className="absolute left-3 top-3 h-4 w-4 text-zinc-500" />
+        <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
         <Input
           placeholder="Search by name or email..."
           className="pl-9"
@@ -41,20 +41,20 @@ export function UserManagement({ users }: UserManagementProps) {
         />
       </form>
 
-      <div className="bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl overflow-hidden">
+      <div className="bg-card text-card-foreground border border-border dark:border-border rounded-xl overflow-hidden">
         <table className="w-full">
           <thead>
-            <tr className="border-b border-zinc-200 dark:border-zinc-800">
-              <th className="text-left p-4 text-sm font-medium text-zinc-500">
+            <tr className="border-b border-border dark:border-border">
+              <th className="text-left p-4 text-sm font-medium text-muted-foreground">
                 User
               </th>
-              <th className="text-left p-4 text-sm font-medium text-zinc-500">
+              <th className="text-left p-4 text-sm font-medium text-muted-foreground">
                 Role
               </th>
-              <th className="text-left p-4 text-sm font-medium text-zinc-500">
+              <th className="text-left p-4 text-sm font-medium text-muted-foreground">
                 Joined
               </th>
-              <th className="text-left p-4 text-sm font-medium text-zinc-500">
+              <th className="text-left p-4 text-sm font-medium text-muted-foreground">
                 Status
               </th>
             </tr>
@@ -63,14 +63,14 @@ export function UserManagement({ users }: UserManagementProps) {
             {users.map((user) => (
               <tr
                 key={user.id}
-                className="border-b border-zinc-100 dark:border-zinc-900 hover:bg-zinc-50 dark:hover:bg-zinc-900/50"
+                className="border-b border-border dark:border-border hover:bg-muted/50 dark:hover:bg-zinc-900/50"
               >
                 <td className="p-4">
                   <div>
                     <p className="font-medium text-sm">
                       {user.full_name || "—"}
                     </p>
-                    <p className="text-xs text-zinc-500">{user.email}</p>
+                    <p className="text-xs text-muted-foreground">{user.email}</p>
                   </div>
                 </td>
                 <td className="p-4">
@@ -82,7 +82,7 @@ export function UserManagement({ users }: UserManagementProps) {
                     {user.role}
                   </span>
                 </td>
-                <td className="p-4 text-sm text-zinc-500">
+                <td className="p-4 text-sm text-muted-foreground">
                   {new Date(user.created_at).toLocaleDateString()}
                 </td>
                 <td className="p-4">
@@ -95,7 +95,7 @@ export function UserManagement({ users }: UserManagementProps) {
           </tbody>
         </table>
         {users.length === 0 && (
-          <div className="p-8 text-center text-zinc-500 text-sm">
+          <div className="p-8 text-center text-muted-foreground text-sm">
             No users found.
           </div>
         )}

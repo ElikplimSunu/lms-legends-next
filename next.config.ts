@@ -1,6 +1,7 @@
 import type { NextConfig } from "next";
 
-const removeImports = require("next-remove-imports")();
+import nextRemoveImports from "next-remove-imports";
+const removeImports = nextRemoveImports();
 
 const nextConfig: NextConfig = {
   images: {
@@ -14,7 +15,6 @@ const nextConfig: NextConfig = {
     ],
   },
   // If we had proxy or images configured, they would go here
-  // @ts-ignore
   turbopack: {}
 };
 

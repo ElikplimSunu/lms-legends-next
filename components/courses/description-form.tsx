@@ -43,7 +43,7 @@ export function DescriptionForm({ initialData, courseId }: DescriptionFormProps)
   };
 
   return (
-    <div className="rounded-xl border border-zinc-200 bg-white p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-950">
+    <div className="rounded-xl border border-border bg-white p-6 shadow-sm dark:border-border dark:bg-background">
       <div className="flex items-center justify-between font-medium">
         <h3 className="font-semibold mb-2">Course Description</h3>
         <Button onClick={toggleEdit} variant="ghost" size="sm">
@@ -61,7 +61,7 @@ export function DescriptionForm({ initialData, courseId }: DescriptionFormProps)
         </Button>
       </div>
       {!isEditing && (
-        <p className={`text-sm mt-2 ${!initialData.description ? "text-zinc-500 italic" : "text-zinc-600"}`}>
+        <p className={`text-sm mt-2 ${!initialData.description ? "text-muted-foreground italic" : "text-muted-foreground"}`}>
           {initialData.description || "No description provided."}
         </p>
       )}

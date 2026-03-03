@@ -46,7 +46,7 @@ export function LessonDescriptionForm({ initialData, courseId, moduleId, lessonI
   };
 
   return (
-    <div className="rounded-xl border border-zinc-200 bg-white p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-950">
+    <div className="rounded-xl border border-border bg-white p-6 shadow-sm dark:border-border dark:bg-background">
       <div className="flex items-center justify-between font-medium">
         <h3 className="font-semibold mb-2">Lesson Description</h3>
         <Button onClick={toggleEdit} variant="ghost" size="sm">
@@ -64,7 +64,7 @@ export function LessonDescriptionForm({ initialData, courseId, moduleId, lessonI
         </Button>
       </div>
       {!isEditing && (
-        <div className={`mt-2 ${!initialData.description ? "text-zinc-500 italic text-sm" : ""}`}>
+        <div className={`mt-2 ${!initialData.description ? "text-muted-foreground italic text-sm" : ""}`}>
           {!initialData.description ? (
             "No description provided."
           ) : (

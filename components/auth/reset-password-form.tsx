@@ -17,7 +17,7 @@ export function ResetPasswordForm() {
     <div className="w-full max-w-md space-y-6">
       <div className="text-center">
         <h1 className="text-2xl font-bold tracking-tight">Set New Password</h1>
-        <p className="text-sm text-zinc-500 mt-1">
+        <p className="text-sm text-muted-foreground mt-1">
           Enter your new password below.
         </p>
       </div>
@@ -55,8 +55,8 @@ export function ResetPasswordForm() {
         </Button>
       </form>
 
-      <p className="text-center text-sm text-zinc-500">
-        <Link href="/login" className="underline hover:text-zinc-900 dark:hover:text-zinc-100">
+      <p className="text-center text-sm text-muted-foreground">
+        <Link href="/login" className="underline hover:text-foreground dark:hover:text-primary-foreground">
           Back to login
         </Link>
       </p>

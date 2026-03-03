@@ -16,6 +16,20 @@ interface QuizFormProps {
 
 type QuizState = "idle" | "in_progress" | "submitted";
 
+interface QuizAttemptData {
+  attempt: { id: string };
+  timeLimit?: number;
+  questions: Array<{ id: string; question_type: string; question_text: string }>;
+  options: Array<{ id: string; question_id: string; option_text: string }>;
+}
+
+interface QuizResultData {
+  passed: boolean;
+  scorePercent: number;
+  earnedPoints: number;
+  totalPoints: number;
+}
+
 export function QuizForm({
   quizId,
   quizTitle,
@@ -24,13 +38,31 @@ export function QuizForm({
   previousAttempts,
 }: QuizFormProps) {
   const [state, setState] = useState<QuizState>("idle");
-  const [attemptData, setAttemptData] = useState<any>(null);
+  const [attemptData, setAttemptData] = useState<QuizAttemptData | null>(null);
   const [selectedAnswers, setSelectedAnswers] = useState<Record<string, string[]>>({});
-  const [results, setResults] = useState<any>(null);
+  const [results, setResults] = useState<QuizResultData | null>(null);
   const [timeLeft, setTimeLeft] = useState<number | null>(null);
   const [isPending, startTransition] = useTransition();
 
   const attemptsRemaining = maxAttempts - previousAttempts;
+
+  const handleSubmit = useCallback(() => {
+    if (!attemptData) return;
+    startTransition(async () => {
+      const answers = attemptData.questions.map((q) => ({
+        questionId: q.id,
+        selectedOptionIds: selectedAnswers[q.id] || [],
+      }));
+
+      const result = await submitQuizAttemptAction(attemptData.attempt.id, answers);
+      if (!result.success) {
+        toast.error(result.error);
+        return;
+      }
+      setResults(result.data as QuizResultData);
+      setState("submitted");
+    });
+  }, [attemptData, selectedAnswers]);
 
   // Timer
   useEffect(() => {
@@ -43,7 +75,7 @@ export function QuizForm({
       setTimeLeft((t) => (t !== null ? t - 1 : null));
     }, 1000);
     return () => clearInterval(interval);
-  }, [state, timeLeft]);
+  }, [state, timeLeft, handleSubmit]);
 
   const handleStart = () => {
     startTransition(async () => {
@@ -52,9 +84,9 @@ export function QuizForm({
         toast.error(result.error);
         return;
       }
-      setAttemptData(result.data);
-      if (result.data.timeLimit) {
-        setTimeLeft(result.data.timeLimit * 60);
+      setAttemptData(result.data as QuizAttemptData);
+      if ((result.data as QuizAttemptData).timeLimit) {
+        setTimeLeft((result.data as QuizAttemptData).timeLimit! * 60);
       }
       setState("in_progress");
     });
@@ -75,24 +107,6 @@ export function QuizForm({
     });
   };
 
-  const handleSubmit = useCallback(() => {
-    if (!attemptData) return;
-    startTransition(async () => {
-      const answers = attemptData.questions.map((q: any) => ({
-        questionId: q.id,
-        selectedOptionIds: selectedAnswers[q.id] || [],
-      }));
-
-      const result = await submitQuizAttemptAction(attemptData.attempt.id, answers);
-      if (!result.success) {
-        toast.error(result.error);
-        return;
-      }
-      setResults(result.data);
-      setState("submitted");
-    });
-  }, [attemptData, selectedAnswers]);
-
   const formatTime = (seconds: number) => {
     const m = Math.floor(seconds / 60);
     const s = seconds % 60;
@@ -104,7 +118,7 @@ export function QuizForm({
     return (
       <div className="text-center space-y-4 p-8">
         <h2 className="text-2xl font-bold">{quizTitle}</h2>
-        <p className="text-zinc-500">
+        <p className="text-muted-foreground">
           Passing score: {passingScore}% · Attempts remaining: {attemptsRemaining}
         </p>
         {attemptsRemaining <= 0 ? (
@@ -137,7 +151,7 @@ export function QuizForm({
           </div>
         )}
         <div className="text-5xl font-bold">{results.scorePercent.toFixed(0)}%</div>
-        <p className="text-zinc-500">
+        <p className="text-muted-foreground">
           {results.earnedPoints} / {results.totalPoints} points · Passing: {passingScore}%
         </p>
         {!results.passed && attemptsRemaining > 1 && (
@@ -166,7 +180,7 @@ export function QuizForm({
       {timeLeft !== null && (
         <div
           className={`flex items-center gap-2 justify-center text-lg font-mono font-bold ${
-            timeLeft < 60 ? "text-red-500" : "text-zinc-600"
+            timeLeft < 60 ? "text-red-500" : "text-muted-foreground"
           }`}
         >
           <Clock className="w-5 h-5" />
@@ -175,37 +189,37 @@ export function QuizForm({
       )}
 
       {/* Questions */}
-      {questions.map((question: any, idx: number) => {
-        const questionOptions = options.filter((o: any) => o.question_id === question.id);
+      {questions.map((question, idx: number) => {
+        const questionOptions = options.filter((o) => o.question_id === question.id);
         const isMultiple = question.question_type === "multiple_choice";
         const selected = selectedAnswers[question.id] || [];
 
         return (
           <div
             key={question.id}
-            className="border border-zinc-200 dark:border-zinc-800 rounded-xl p-6 space-y-4"
+            className="border border-border dark:border-border rounded-xl p-6 space-y-4"
           >
             <div className="flex items-start gap-3">
-              <span className="text-sm font-semibold bg-zinc-100 dark:bg-zinc-900 px-2 py-1 rounded">
+              <span className="text-sm font-semibold bg-muted dark:bg-muted px-2 py-1 rounded">
                 Q{idx + 1}
               </span>
               <div>
                 <p className="font-medium">{question.question_text}</p>
                 {isMultiple && (
-                  <p className="text-xs text-zinc-400 mt-1">Select all that apply</p>
+                  <p className="text-xs text-muted-foreground mt-1">Select all that apply</p>
                 )}
               </div>
             </div>
             <div className="space-y-2 pl-8">
-              {questionOptions.map((option: any) => (
+              {questionOptions.map((option) => (
                 <button
                   key={option.id}
                   type="button"
                   onClick={() => handleOptionSelect(question.id, option.id, isMultiple)}
                   className={`w-full text-left p-3 rounded-lg border transition text-sm ${
                     selected.includes(option.id)
-                      ? "border-blue-500 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300"
-                      : "border-zinc-200 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-900"
+                      ? "border-blue-500 bg-blue-50 dark:bg-primary/20/20 text-primary-foreground dark:text-blue-300"
+                      : "border-border dark:border-border hover:bg-muted/50 dark:hover:bg-zinc-900"
                   }`}
                 >
                   {option.option_text}

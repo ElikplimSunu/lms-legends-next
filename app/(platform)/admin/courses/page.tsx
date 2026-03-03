@@ -17,8 +17,8 @@ export default async function AdminCoursesPage() {
     .order("created_at", { ascending: false })
     .limit(50);
 
-  const pending = (courses || []).filter((c: any) => c.status === "pending_review");
-  const published = (courses || []).filter((c: any) => c.status === "published");
+  const pending = (courses || []).filter((c: unknown) => c.status === "pending_review");
+  const published = (courses || []).filter((c: unknown) => c.status === "published");
 
   const statusColors: Record<string, string> = {
     pending_review: "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400",
@@ -39,7 +39,7 @@ export default async function AdminCoursesPage() {
             Pending Review ({pending.length})
           </h2>
           <div className="space-y-3">
-            {pending.map((course: any) => (
+            {pending.map((course: unknown) => (
               <div
                 key={course.id}
                 className="bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl p-5 flex items-center justify-between"
@@ -47,7 +47,7 @@ export default async function AdminCoursesPage() {
                 <div>
                   <p className="font-semibold">{course.title}</p>
                   <p className="text-sm text-zinc-500">
-                    by {(course.profiles as any)?.full_name} ·{" "}
+                    by {(course.profiles as unknown)?.full_name} ·{" "}
                     {new Date(course.created_at).toLocaleDateString()}
                   </p>
                 </div>
@@ -78,11 +78,11 @@ export default async function AdminCoursesPage() {
               </tr>
             </thead>
             <tbody>
-              {(courses || []).map((course: any) => (
+              {(courses || []).map((course: unknown) => (
                 <tr key={course.id} className="border-b border-zinc-100 dark:border-zinc-900">
                   <td className="p-4 text-sm font-medium">{course.title}</td>
                   <td className="p-4 text-sm text-zinc-500">
-                    {(course.profiles as any)?.full_name}
+                    {(course.profiles as unknown)?.full_name}
                   </td>
                   <td className="p-4">
                     <span className={`text-xs font-semibold px-2 py-1 rounded capitalize ${statusColors[course.status] || ""}`}>

@@ -13,7 +13,7 @@ import { reorderModulesAction } from "@/actions/modules";
 import { ModulesList } from "./modules-list";
 
 interface ModulesFormProps {
-  initialData: any[]; // Using any[] for now before we lock down database types with Supabase CLI
+  initialData: unknown[]; // Using any[] for now before we lock down database types with Supabase CLI
   courseId: string;
 }
 
@@ -62,7 +62,7 @@ export function ModulesForm({ initialData, courseId }: ModulesFormProps) {
   };
 
   return (
-    <div className="relative mt-6 rounded-xl border border-zinc-200 bg-white p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-950">
+    <div className="relative mt-6 rounded-xl border border-border bg-white p-6 shadow-sm dark:border-border dark:bg-background">
       <div className="flex items-center justify-between font-medium">
         <h3 className="font-semibold mb-2">Course Modules</h3>
         <Button onClick={toggleCreating} variant="ghost" size="sm">

@@ -56,7 +56,7 @@ export default async function LessonPage({
     redirect(`/learn/${courseSlug}`);
   }
 
-  const courseId = (lesson.modules as any).courses.id;
+  const courseId = (lesson.modules as { courses: { id: string } }).courses.id;
 
   // Check enrollment
   const { data: enrollment } = await supabase
@@ -104,7 +104,7 @@ export default async function LessonPage({
     .order("sort_order");
 
   const currentIdx = (moduleLessons || []).findIndex(
-    (l: any) => l.id === lesson.id
+    (l: { id: string }) => l.id === lesson.id
   );
   const nextLesson =
     moduleLessons && currentIdx < moduleLessons.length - 1

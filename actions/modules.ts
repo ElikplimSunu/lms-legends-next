@@ -11,9 +11,9 @@ const moduleSchema = z.object({
 });
 
 export async function createModuleAction(
-    prevState: any,
+    prevState: unknown,
     formData: FormData
-): Promise<ActionResult<any>> {
+): Promise<ActionResult<unknown>> {
     const supabase = await createServerClient();
     const { data: { user } } = await supabase.auth.getUser();
 
@@ -80,9 +80,9 @@ export async function createModuleAction(
 export async function updateModuleAction(
     moduleId: string,
     courseId: string,
-    prevState: any,
+    prevState: unknown,
     formData: FormData
-): Promise<ActionResult<any>> {
+): Promise<ActionResult<unknown>> {
     const supabase = await createServerClient();
     const { data: { user } } = await supabase.auth.getUser();
 
@@ -109,7 +109,7 @@ export async function updateModuleAction(
             return { success: false, error: "Unauthorized" };
         }
 
-        const updates: any = {};
+        const updates: Record<string, unknown> = {};
         if (title) updates.title = title;
 
         const { error, data } = await supabase

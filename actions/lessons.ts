@@ -12,9 +12,9 @@ const lessonSchema = z.object({
 
 export async function createLessonAction(
     courseId: string,
-    prevState: any,
+    prevState: unknown,
     formData: FormData
-): Promise<ActionResult<any>> {
+): Promise<ActionResult<unknown>> {
     const supabase = await createServerClient();
     const { data: { user } } = await supabase.auth.getUser();
 
@@ -82,9 +82,9 @@ export async function updateLessonAction(
     lessonId: string,
     moduleId: string,
     courseId: string,
-    prevState: any,
+    prevState: unknown,
     formData: FormData
-): Promise<ActionResult<any>> {
+): Promise<ActionResult<unknown>> {
     const supabase = await createServerClient();
     const { data: { user } } = await supabase.auth.getUser();
 
@@ -110,7 +110,7 @@ export async function updateLessonAction(
             return { success: false, error: "Unauthorized" };
         }
 
-        const updates: any = {};
+        const updates: Record<string, unknown> = {};
         if (title !== null) updates.title = title;
         if (description !== null) updates.description = description;
         if (is_free_preview !== null) updates.is_free_preview = is_free_preview === "true";

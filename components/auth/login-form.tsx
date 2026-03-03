@@ -37,7 +37,7 @@ export function LoginForm() {
         <div className="space-y-2">
           <div className="flex items-center justify-between">
             <Label htmlFor="password">Password</Label>
-            <Link href="/forgot-password" className="text-sm font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400">
+            <Link href="/forgot-password" className="text-sm font-medium text-primary hover:text-primary/80 dark:text-primary/70">
               Forgot password?
             </Link>
           </div>
@@ -58,10 +58,10 @@ export function LoginForm() {
       {/* OAuth Divider */}
       <div className="relative my-4">
         <div className="absolute inset-0 flex items-center">
-          <div className="w-full border-t border-zinc-200 dark:border-zinc-800" />
+          <div className="w-full border-t border-border dark:border-border" />
         </div>
         <div className="relative flex justify-center text-xs uppercase">
-          <span className="bg-white dark:bg-zinc-950 px-2 text-zinc-400">or continue with</span>
+          <span className="bg-card text-card-foreground px-2 text-muted-foreground">or continue with</span>
         </div>
       </div>
 
@@ -97,9 +97,9 @@ export function LoginForm() {
         </Button>
       </div>
 
-      <div className="text-center text-sm text-zinc-500 dark:text-zinc-400 mt-4">
+      <div className="text-center text-sm text-muted-foreground dark:text-muted-foreground mt-4">
         Don&apos;t have an account?{" "}
-        <Link href="/register" className="font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400">
+        <Link href="/register" className="font-medium text-primary hover:text-primary/80 dark:text-primary/70">
           Sign up
         </Link>
       </div>

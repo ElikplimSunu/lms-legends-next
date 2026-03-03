@@ -43,7 +43,7 @@ export function TitleForm({ initialData, courseId }: TitleFormProps) {
   };
 
   return (
-    <div className="rounded-xl border border-zinc-200 bg-white p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-950">
+    <div className="rounded-xl border border-border bg-white p-6 shadow-sm dark:border-border dark:bg-background">
       <div className="flex items-center justify-between font-medium">
         <h3 className="font-semibold mb-2">Course Title</h3>
         <Button onClick={toggleEdit} variant="ghost" size="sm">
@@ -61,7 +61,7 @@ export function TitleForm({ initialData, courseId }: TitleFormProps) {
         </Button>
       </div>
       {!isEditing && (
-        <p className="text-sm text-zinc-600 mt-2">{initialData.title}</p>
+        <p className="text-sm text-muted-foreground mt-2">{initialData.title}</p>
       )}
       {isEditing && (
         <form onSubmit={onSubmit} className="mt-4 space-y-4">

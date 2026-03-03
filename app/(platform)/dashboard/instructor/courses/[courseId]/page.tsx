@@ -108,7 +108,7 @@ export default async function CourseSetupPage({
             </div>
             
             <ModulesForm 
-                initialData={course.modules.sort((a: any, b: any) => a.sort_order - b.sort_order)}
+                initialData={course.modules.sort((a: unknown, b: unknown) => a.sort_order - b.sort_order)}
                 courseId={course.id}
             />
            </div>

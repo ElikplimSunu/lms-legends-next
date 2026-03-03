@@ -8,7 +8,7 @@ import { ActionResult } from "@/types";
 export async function createQuizAction(
     moduleId: string,
     data: { title: string; description?: string; passing_score_percent?: number; time_limit_minutes?: number; max_attempts?: number; is_certification_exam?: boolean }
-): Promise<ActionResult<any>> {
+): Promise<ActionResult<unknown>> {
     const supabase = await createServerClient();
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) return { success: false, error: "Not authenticated" };
@@ -20,7 +20,7 @@ export async function createQuizAction(
         .eq("id", moduleId)
         .single();
 
-    if (!module || (module as any).courses.instructor_id !== user.id) {
+    if (!module || (module as { courses: { instructor_id: string } }).courses.instructor_id !== user.id) {
         return { success: false, error: "Unauthorized" };
     }
 
@@ -54,7 +54,7 @@ export async function addQuestionAction(
         explanation?: string;
         options: { option_text: string; is_correct: boolean }[];
     }
-): Promise<ActionResult<any>> {
+): Promise<ActionResult<unknown>> {
     const supabase = await createServerClient();
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) return { success: false, error: "Not authenticated" };
@@ -114,7 +114,7 @@ export async function deleteQuestionAction(questionId: string): Promise<ActionRe
 }
 
 // ── Student: Start Quiz Attempt ──
-export async function startQuizAttemptAction(quizId: string): Promise<ActionResult<any>> {
+export async function startQuizAttemptAction(quizId: string): Promise<ActionResult<unknown>> {
     const supabase = await createServerClient();
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) return { success: false, error: "Not authenticated" };
@@ -157,7 +157,7 @@ export async function startQuizAttemptAction(quizId: string): Promise<ActionResu
         .eq("quiz_id", quizId)
         .order("sort_order");
 
-    const questionIds = (questions || []).map((q: any) => q.id);
+    const questionIds = (questions || []).map((q: { id: string }) => q.id);
 
     // Get options (without is_correct)
     const { data: options } = await supabase
@@ -181,7 +181,7 @@ export async function startQuizAttemptAction(quizId: string): Promise<ActionResu
 export async function submitQuizAttemptAction(
     attemptId: string,
     answers: { questionId: string; selectedOptionIds: string[]; textAnswer?: string }[]
-): Promise<ActionResult<any>> {
+): Promise<ActionResult<unknown>> {
     const supabase = await createServerClient();
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) return { success: false, error: "Not authenticated" };
@@ -198,7 +198,7 @@ export async function submitQuizAttemptAction(
     if (!attempt) return { success: false, error: "Invalid attempt" };
 
     // Check time limit
-    const quiz = (attempt as any).quizzes;
+    const quiz = (attempt as { quizzes: unknown }).quizzes;
     if (quiz.time_limit_minutes) {
         const elapsed = (Date.now() - new Date(attempt.started_at).getTime()) / 60000;
         if (elapsed > quiz.time_limit_minutes + 0.5) {
@@ -240,7 +240,7 @@ export async function submitQuizAttemptAction(
     let earnedPoints = 0;
 
     for (const answer of savedAnswers.data || []) {
-        const qPoints = (answer as any).quiz_questions.points;
+        const qPoints = (answer as { quiz_questions: { points: number } }).quiz_questions.points;
         totalPoints += qPoints;
 
         const { data: correctOptions } = await adminClient
@@ -249,7 +249,7 @@ export async function submitQuizAttemptAction(
             .eq("question_id", answer.question_id)
             .eq("is_correct", true);
 
-        const correctIds = new Set((correctOptions || []).map((o: any) => o.id));
+        const correctIds = new Set((correctOptions || []).map((o: { id: string }) => o.id));
         const selectedIds = new Set(answer.selected_option_ids || []);
 
         const isCorrect =

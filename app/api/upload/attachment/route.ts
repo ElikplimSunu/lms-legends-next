@@ -29,7 +29,7 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({ error: "Lesson not found" }, { status: 404 });
         }
 
-        const instructorId = (lesson as any)?.modules?.courses?.instructor_id;
+        const instructorId = (lesson as unknown)?.modules?.courses?.instructor_id;
         const { data: profile } = await supabase
             .from("profiles")
             .select("role")

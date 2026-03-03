@@ -32,6 +32,7 @@ export default async function LearnCourseOverviewPage({
   if (!course) redirect("/courses");
 
   // Check enrollment
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { data: enrollment } = await supabase
     .from("enrollments")
     .select("id")
@@ -42,12 +43,14 @@ export default async function LearnCourseOverviewPage({
 
   // Find the user's last opened lesson or the first lesson
   const sortedModules = (course.modules || []).sort(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (a: any, b: any) => a.sort_order - b.sort_order
   );
 
   let firstLessonId: string | null = null;
-  for (const module of sortedModules) {
-    const sortedLessons = (module.lessons || []).sort(
+  for (const courseModule of sortedModules) {
+    const sortedLessons = (courseModule.lessons || []).sort(
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (a: any, b: any) => a.sort_order - b.sort_order
     );
     if (sortedLessons.length > 0) {

@@ -45,7 +45,7 @@ export function FreePreviewToggle({
       <button
         type="button"
         role="switch"
-        aria-checked={initialValue ? true : false}
+        aria-checked={initialValue ? "true" : "false"}
         onClick={handleToggle}
         disabled={isPending}
         className={`
@@ -53,7 +53,7 @@ export function FreePreviewToggle({
           transition-colors duration-200 ease-in-out focus-visible:outline-none focus-visible:ring-2
           focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background
           disabled:cursor-not-allowed disabled:opacity-50
-          ${initialValue ? "bg-blue-600" : "bg-zinc-200 dark:bg-zinc-700"}
+          ${initialValue ? "bg-primary" : "bg-secondary dark:bg-secondary"}
         `}
       >
         <span
@@ -66,7 +66,7 @@ export function FreePreviewToggle({
       </button>
       <div>
         <p className="text-sm font-medium">Free Preview</p>
-        <p className="text-xs text-zinc-500">
+        <p className="text-xs text-muted-foreground">
           {isPending
             ? "Saving..."
             : initialValue

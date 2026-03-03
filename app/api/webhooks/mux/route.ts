@@ -35,11 +35,11 @@ export async function POST(req: NextRequest) {
         }
 
         // Verify webhook signature (gracefully skip if no signing secret configured yet)
-        let event: any;
+        let event: unknown;
         if (process.env.MUX_WEBHOOK_SIGNING_SECRET) {
             try {
-                event = mux.webhooks.unwrap(payload, req.headers as any, process.env.MUX_WEBHOOK_SIGNING_SECRET);
-            } catch (err: any) {
+                event = mux.webhooks.unwrap(payload, req.headers as unknown, process.env.MUX_WEBHOOK_SIGNING_SECRET);
+            } catch (err: unknown) {
                 console.error("[MUX WEBHOOK] Signature verification failed:", err.message);
                 return NextResponse.json({ error: "Invalid signature" }, { status: 400 });
             }

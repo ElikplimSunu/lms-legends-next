@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
 interface CategoryManagerProps {
-  categories: any[];
+  categories: unknown[];
 }
 
 export function CategoryManager({ categories }: CategoryManagerProps) {
@@ -52,22 +52,22 @@ export function CategoryManager({ categories }: CategoryManagerProps) {
       </div>
 
       {/* Category List */}
-      <div className="bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl overflow-hidden">
+      <div className="bg-card text-card-foreground border border-border dark:border-border rounded-xl overflow-hidden">
         {categories.length === 0 ? (
-          <div className="p-8 text-center text-zinc-500 text-sm">
-            <FolderTree className="w-8 h-8 mx-auto mb-2 text-zinc-400" />
+          <div className="p-8 text-center text-muted-foreground text-sm">
+            <FolderTree className="w-8 h-8 mx-auto mb-2 text-muted-foreground" />
             No categories yet.
           </div>
         ) : (
           <div className="divide-y divide-zinc-100 dark:divide-zinc-900">
-            {categories.map((cat: any) => (
+            {categories.map((cat: unknown) => (
               <div
                 key={cat.id}
-                className="flex items-center justify-between p-4 hover:bg-zinc-50 dark:hover:bg-zinc-900/50"
+                className="flex items-center justify-between p-4 hover:bg-muted/50 dark:hover:bg-zinc-900/50"
               >
                 <div>
                   <p className="font-medium text-sm">{cat.name}</p>
-                  <p className="text-xs text-zinc-500">/{cat.slug}</p>
+                  <p className="text-xs text-muted-foreground">/{cat.slug}</p>
                 </div>
               </div>
             ))}

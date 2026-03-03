@@ -39,7 +39,7 @@ export default async function AdminInstructorsPage() {
           <p className="text-zinc-500 text-sm">No pending applications.</p>
         ) : (
           <div className="space-y-3">
-            {pendingApplications.map((user: any) => (
+            {pendingApplications.map((user: unknown) => (
               <div
                 key={user.id}
                 className="bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl p-5 flex items-center justify-between"
@@ -84,7 +84,7 @@ export default async function AdminInstructorsPage() {
               </tr>
             </thead>
             <tbody>
-              {(approvedInstructors || []).map((inst: any) => (
+              {(approvedInstructors || []).map((inst: unknown) => (
                 <tr key={inst.id} className="border-b border-zinc-100 dark:border-zinc-900">
                   <td className="p-4 text-sm font-medium">{inst.full_name || "—"}</td>
                   <td className="p-4 text-sm text-zinc-500">{inst.email}</td>

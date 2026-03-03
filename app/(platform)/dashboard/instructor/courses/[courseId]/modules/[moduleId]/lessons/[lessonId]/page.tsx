@@ -183,7 +183,7 @@ export default async function LessonSetupPage({
               <div className="rounded-xl border border-zinc-200 bg-white p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-950 space-y-4">
                 {(lesson.lesson_attachments || []).length > 0 && (
                   <div className="space-y-2">
-                    {(lesson.lesson_attachments as any[]).map((att: any) => (
+                    {(lesson.lesson_attachments as unknown[]).map((att: unknown) => (
                       <div key={att.id} className="flex items-center gap-2 text-sm p-2 bg-zinc-50 dark:bg-zinc-900 rounded-md">
                         <FileIcon className="w-4 h-4 text-blue-500" />
                         <a href={att.file_url} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline truncate">

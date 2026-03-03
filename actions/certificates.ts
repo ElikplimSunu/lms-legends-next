@@ -75,8 +75,8 @@ export async function getCertificateAction(certificateNumber: string) {
     return {
         certificateNumber: data.certificate_number,
         issuedAt: data.issued_at,
-        userName: (data.profiles as any)?.full_name || (data.profiles as any)?.email || "Student",
-        courseTitle: (data.courses as any)?.title || "Course",
-        courseSlug: (data.courses as any)?.slug,
+        userName: (data.profiles as { full_name?: string, email?: string })?.full_name || (data.profiles as { full_name?: string, email?: string })?.email || "Student",
+        courseTitle: (data.courses as { title?: string, slug?: string })?.title || "Course",
+        courseSlug: (data.courses as { title?: string, slug?: string })?.slug,
     };
 }

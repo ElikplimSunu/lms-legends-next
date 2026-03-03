@@ -48,8 +48,8 @@ export default async function LearnCourseLayout({
   const isEnrolled = !!enrollment;
 
   // Get progress
-  const lessonIds = (course.modules || []).flatMap((m: any) =>
-    (m.lessons || []).map((l: any) => l.id)
+  const lessonIds = (course.modules || []).flatMap((m: { lessons?: { id: string }[] }) =>
+    (m.lessons || []).map((l: { id: string }) => l.id)
   );
 
   let completedLessonIds = new Set<string>();
@@ -62,16 +62,16 @@ export default async function LearnCourseLayout({
       .eq("is_completed", true);
 
     completedLessonIds = new Set(
-      (progress || []).map((p: any) => p.lesson_id)
+      (progress || []).map((p: unknown) => p.lesson_id)
     );
   }
 
   // Sort
   const sortedModules = (course.modules || []).sort(
-    (a: any, b: any) => a.sort_order - b.sort_order
+    (a: unknown, b: unknown) => a.sort_order - b.sort_order
   );
-  sortedModules.forEach((m: any) => {
-    m.lessons?.sort((a: any, b: any) => a.sort_order - b.sort_order);
+  sortedModules.forEach((m: unknown) => {
+    m.lessons?.sort((a: unknown, b: unknown) => a.sort_order - b.sort_order);
   });
 
   const totalLessons = lessonIds.length;
@@ -113,12 +113,12 @@ export default async function LearnCourseLayout({
         </div>
 
         <nav className="flex-1 p-2 space-y-1">
-          {sortedModules.map((module: any, idx: number) => (
+          {sortedModules.map((module: unknown, idx: number) => (
             <div key={module.id} className="mb-4">
               <p className="text-xs font-semibold text-zinc-500 uppercase tracking-wider px-3 py-2">
                 Module {idx + 1}: {module.title}
               </p>
-              {module.lessons?.map((lesson: any) => {
+              {module.lessons?.map((lesson: unknown) => {
                 const isCompleted = completedLessonIds.has(lesson.id);
                 const isAccessible = isEnrolled || lesson.is_free_preview;
 

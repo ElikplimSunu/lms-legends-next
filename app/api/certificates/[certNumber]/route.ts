@@ -18,8 +18,8 @@ export async function GET(
         return NextResponse.json({ error: "Certificate not found" }, { status: 404 });
     }
 
-    const userName = (cert.profiles as any)?.full_name || "Student";
-    const courseTitle = (cert.courses as any)?.title || "Course";
+    const userName = (cert.profiles as unknown)?.full_name || "Student";
+    const courseTitle = (cert.courses as unknown)?.title || "Course";
     const issuedDate = new Date(cert.issued_at).toLocaleDateString("en-US", {
         year: "numeric",
         month: "long",

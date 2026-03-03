@@ -67,6 +67,9 @@ export function FileUpload({ lessonId, onUploaded }: FileUploadProps) {
         ref={fileInputRef}
         type="file"
         className="hidden"
+        title="Upload lesson attachment"
+        placeholder="Upload a file"
+        aria-label="Upload lesson attachment"
         onChange={handleFileChange}
       />
     </div>

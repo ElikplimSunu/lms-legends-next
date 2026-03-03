@@ -79,7 +79,7 @@ export async function markLessonCompleteAction(
  */
 export async function getCourseProgressAction(
     courseId: string
-): Promise<ActionResult<any[]>> {
+): Promise<ActionResult<unknown[]>> {
     const supabase = await createServerClient();
     const {
         data: { user },
@@ -99,8 +99,8 @@ export async function getCourseProgressAction(
         return { success: true, data: [] };
     }
 
-    const lessonIds = modules.flatMap((m: any) =>
-        (m.lessons || []).map((l: any) => l.id)
+    const lessonIds = modules.flatMap((m: { lessons?: { id: string }[] }) =>
+        (m.lessons || []).map((l: { id: string }) => l.id)
     );
 
     if (lessonIds.length === 0) {

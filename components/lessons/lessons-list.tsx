@@ -12,7 +12,7 @@ import { Grip, Pencil, Video } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
 interface LessonsListProps {
-  items: any[];
+  items: unknown[];
   onReorder: (updateData: { id: string; position: number }[]) => void;
   onEdit: (id: string) => void;
 }
@@ -72,13 +72,13 @@ export function LessonsList({
               >
                 {(provided) => (
                   <div
-                    className={`flex items-center gap-x-2 bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-700 dark:text-zinc-300 rounded-md mb-4 text-sm
+                    className={`flex items-center gap-x-2 bg-muted dark:bg-muted border border-border dark:border-border text-foreground dark:text-muted-foreground rounded-md mb-4 text-sm
                     `}
                     ref={provided.innerRef}
                     {...provided.draggableProps}
                   >
                     <div
-                      className={`px-2 py-3 border-r border-zinc-200 dark:border-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-800 rounded-l-md transition
+                      className={`px-2 py-3 border-r border-border dark:border-border hover:bg-secondary dark:hover:bg-zinc-800 rounded-l-md transition
                       `}
                       {...provided.dragHandleProps}
                     >
@@ -92,10 +92,10 @@ export function LessonsList({
                         </Badge>
                       )}
                       {lesson.mux_playback_id && (
-                        <Video className="w-4 h-4 text-zinc-500" />
+                        <Video className="w-4 h-4 text-muted-foreground" />
                       )}
                       <Badge
-                        className="bg-zinc-500 hover:bg-zinc-600"
+                        className="bg-muted/500 hover:bg-zinc-600"
                       >
                         Lesson
                       </Badge>

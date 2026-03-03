@@ -53,7 +53,7 @@ export default async function InstructorCoursesPage() {
           <div className="col-span-full flex h-64 flex-col items-center justify-center rounded-xl border border-dashed border-zinc-200 dark:border-zinc-800">
             <BookLock className="h-8 w-8 text-zinc-400 mb-2" />
             <h3 className="font-semibold">No courses yet</h3>
-            <p className="text-sm text-zinc-500 mb-4">You haven't created any courses.</p>
+            <p className="text-sm text-zinc-500 mb-4">You haven&apos;t created any courses.</p>
             <Link href="/dashboard/instructor/courses/new">
               <Button variant="outline">Create your first course</Button>
             </Link>
