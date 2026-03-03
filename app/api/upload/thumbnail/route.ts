@@ -43,18 +43,19 @@ export async function POST(req: NextRequest) {
     const fileName = `courses/${courseId}/thumbnail-${Date.now()}.${ext}`;
 
     const { error: uploadError } = await supabase.storage
-        .from("course-thumbnails")
+        .from("thumbnails")
         .upload(fileName, file, {
             cacheControl: "3600",
             upsert: true,
         });
 
     if (uploadError) {
+        console.error("Storage upload error:", uploadError);
         return NextResponse.json({ error: uploadError.message }, { status: 500 });
     }
 
     const { data: { publicUrl } } = supabase.storage
-        .from("course-thumbnails")
+        .from("thumbnails")
         .getPublicUrl(fileName);
 
     // Update course record
