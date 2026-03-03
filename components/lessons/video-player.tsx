@@ -1,44 +1,75 @@
+"use client";
+
 import MuxPlayer from "@mux/mux-player-react";
+import { useRef, useCallback } from "react";
+import { Lock } from "lucide-react";
 
 interface VideoPlayerProps {
   playbackId: string;
+  playbackToken?: string;
   courseId: string;
   lessonId: string;
-  nextLessonId?: string;
+  initialPosition?: number;
   isLocked?: boolean;
+  onProgressSave?: (lessonId: string, position: number) => void;
+  onComplete?: (lessonId: string) => void;
 }
 
 export function VideoPlayer({
   playbackId,
+  playbackToken,
   courseId,
   lessonId,
-  nextLessonId,
+  initialPosition = 0,
   isLocked,
+  onProgressSave,
+  onComplete,
 }: VideoPlayerProps) {
+  const lastSaved = useRef(0);
+
+  const handleTimeUpdate = useCallback(
+    (e: Event) => {
+      const player = e.target as HTMLVideoElement;
+      const current = player.currentTime;
+
+      // Debounce: save every 30 seconds
+      if (current - lastSaved.current > 30 && onProgressSave) {
+        lastSaved.current = current;
+        onProgressSave(lessonId, current);
+      }
+    },
+    [lessonId, onProgressSave]
+  );
+
+  const handleEnded = useCallback(() => {
+    if (onComplete) {
+      onComplete(lessonId);
+    }
+  }, [lessonId, onComplete]);
+
   if (isLocked) {
     return (
       <div className="flex bg-zinc-950 text-white flex-col gap-y-2 items-center justify-center aspect-video rounded-md border border-zinc-800">
-        <p className="text-sm font-medium">This chapter is locked.</p>
-        <p className="text-xs text-zinc-400">Please enroll in the course to view.</p>
+        <Lock className="w-8 h-8 text-zinc-500" />
+        <p className="text-sm font-medium">This lesson is locked.</p>
+        <p className="text-xs text-zinc-400">
+          Please enroll in the course to view.
+        </p>
       </div>
     );
   }
-
-  // TODO: We need to sign this playbackId if the policy is "signed"
-  // For now, we will assume "public" or signed via a separate server action mechanism if strictly enforced.
-  // We'll scaffold the player first and wire signing based on environment variable presence.
 
   return (
     <div className="relative aspect-video rounded-md overflow-hidden bg-zinc-950">
       <MuxPlayer
         playbackId={playbackId}
+        tokens={playbackToken ? { playback: playbackToken } : undefined}
+        startTime={initialPosition}
         className="w-full h-full"
-        // tokens={{
-        //   playback: signedToken, // If we strictly use signed policies
-        // }}
-        onEnded={() => {
-           // We can mark the lesson as completed here
-        }}
+        onTimeUpdate={handleTimeUpdate}
+        onEnded={handleEnded}
+        accentColor="#6366f1"
+        metadata={{ video_title: "Lesson Video" }}
       />
     </div>
   );

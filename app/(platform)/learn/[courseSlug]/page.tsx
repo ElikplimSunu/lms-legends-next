@@ -1,0 +1,72 @@
+import { createServerClient } from "@/lib/supabase/server";
+import { redirect } from "next/navigation";
+
+export default async function LearnCourseOverviewPage({
+  params,
+}: {
+  params: { courseSlug: string };
+}) {
+  const supabase = await createServerClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) redirect("/login");
+
+  // Fetch course and find the first lesson to redirect to
+  const { data: course } = await supabase
+    .from("courses")
+    .select(
+      `
+      id,
+      modules (
+        id, sort_order,
+        lessons (id, sort_order)
+      )
+    `
+    )
+    .eq("slug", params.courseSlug)
+    .single();
+
+  if (!course) redirect("/courses");
+
+  // Check enrollment
+  const { data: enrollment } = await supabase
+    .from("enrollments")
+    .select("id")
+    .eq("user_id", user.id)
+    .eq("course_id", course.id)
+    .eq("status", "active")
+    .single();
+
+  // Find the user's last opened lesson or the first lesson
+  const sortedModules = (course.modules || []).sort(
+    (a: any, b: any) => a.sort_order - b.sort_order
+  );
+
+  let firstLessonId: string | null = null;
+  for (const module of sortedModules) {
+    const sortedLessons = (module.lessons || []).sort(
+      (a: any, b: any) => a.sort_order - b.sort_order
+    );
+    if (sortedLessons.length > 0) {
+      firstLessonId = sortedLessons[0].id;
+      break;
+    }
+  }
+
+  if (firstLessonId) {
+    redirect(`/learn/${params.courseSlug}/lessons/${firstLessonId}`);
+  }
+
+  return (
+    <div className="flex items-center justify-center h-full">
+      <div className="text-center space-y-2">
+        <h2 className="text-xl font-semibold">No lessons yet</h2>
+        <p className="text-zinc-500">
+          This course doesn&apos;t have any lessons yet.
+        </p>
+      </div>
+    </div>
+  );
+}

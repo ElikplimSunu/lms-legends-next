@@ -142,3 +142,46 @@ export async function resetPasswordAction(
 
     return { success: true, data: undefined };
 }
+
+export async function updatePasswordAction(
+    prevState: ActionResult<void> | null,
+    formData: FormData
+): Promise<ActionResult<void>> {
+    const password = formData.get("password") as string;
+    const confirmPassword = formData.get("confirmPassword") as string;
+
+    if (!password || password.length < 6) {
+        return { success: false, error: "Password must be at least 6 characters" };
+    }
+
+    if (password !== confirmPassword) {
+        return { success: false, error: "Passwords do not match" };
+    }
+
+    const supabase = await createServerClient();
+    const { error } = await supabase.auth.updateUser({ password });
+
+    if (error) {
+        return { success: false, error: error.message };
+    }
+
+    redirect("/login");
+}
+
+export async function signInWithOAuthAction(provider: "google" | "github") {
+    const supabase = await createServerClient();
+    const { data, error } = await supabase.auth.signInWithOAuth({
+        provider,
+        options: {
+            redirectTo: `${process.env.NEXT_PUBLIC_APP_URL}/api/auth/callback`,
+        },
+    });
+
+    if (error) {
+        return { success: false, error: error.message };
+    }
+
+    if (data.url) {
+        redirect(data.url);
+    }
+}
