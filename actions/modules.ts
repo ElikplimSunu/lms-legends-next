@@ -44,13 +44,13 @@ export async function createModuleAction(
         // Determine the next position (max position + 1)
         const { data: existingModules } = await supabase
             .from("modules")
-            .select("position")
+            .select("sort_order")
             .eq("course_id", validatedData.course_id)
-            .order("position", { ascending: false })
+            .order("sort_order", { ascending: false })
             .limit(1);
 
-        const position = existingModules && existingModules.length > 0
-            ? existingModules[0].position + 1
+        const sort_order = existingModules && existingModules.length > 0
+            ? existingModules[0].sort_order + 1
             : 0;
 
         const { data: newModule, error } = await supabase
@@ -58,7 +58,7 @@ export async function createModuleAction(
             .insert({
                 title: validatedData.title,
                 course_id: validatedData.course_id,
-                position,
+                sort_order,
             })
             .select()
             .single();
@@ -92,9 +92,8 @@ export async function updateModuleAction(
 
     try {
         const title = formData.get("title");
-        const is_published = formData.get("is_published");
 
-        if (!title && is_published === null) {
+        if (!title) {
             return { success: false, error: "Nothing to update" };
         }
 
@@ -112,7 +111,6 @@ export async function updateModuleAction(
 
         const updates: any = {};
         if (title) updates.title = title;
-        if (is_published !== null) updates.is_published = is_published === "true";
 
         const { error, data } = await supabase
             .from("modules")
@@ -163,7 +161,7 @@ export async function reorderModulesAction(
         const promises = updateData.map((update) =>
             supabase
                 .from("modules")
-                .update({ position: update.position })
+                .update({ sort_order: update.position })
                 .eq("id", update.id)
                 .eq("course_id", courseId)
         );

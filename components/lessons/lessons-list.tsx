@@ -73,14 +73,12 @@ export function LessonsList({
                 {(provided) => (
                   <div
                     className={`flex items-center gap-x-2 bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-700 dark:text-zinc-300 rounded-md mb-4 text-sm
-                    ${lesson.is_published && "bg-blue-50 dark:bg-blue-900/10 border-blue-200 dark:border-blue-900/30 text-blue-700 dark:text-blue-300"}
                     `}
                     ref={provided.innerRef}
                     {...provided.draggableProps}
                   >
                     <div
                       className={`px-2 py-3 border-r border-zinc-200 dark:border-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-800 rounded-l-md transition
-                      ${lesson.is_published && "border-r-blue-200 dark:border-blue-900/30 hover:bg-blue-100 dark:hover:bg-blue-900/20"}
                       `}
                       {...provided.dragHandleProps}
                     >
@@ -88,7 +86,7 @@ export function LessonsList({
                     </div>
                     {lesson.title}
                     <div className="ml-auto pr-2 flex items-center gap-x-2">
-                      {lesson.is_free && (
+                      {lesson.is_free_preview && (
                         <Badge variant="outline" className="bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-900/20 dark:text-emerald-400 dark:border-emerald-900/30">
                           Free
                         </Badge>
@@ -97,11 +95,9 @@ export function LessonsList({
                         <Video className="w-4 h-4 text-zinc-500" />
                       )}
                       <Badge
-                        className={`bg-zinc-500 hover:bg-zinc-600 ${
-                          lesson.is_published && "bg-blue-500 hover:bg-blue-600"
-                        }`}
+                        className="bg-zinc-500 hover:bg-zinc-600"
                       >
-                        {lesson.is_published ? "Published" : "Draft"}
+                        Lesson
                       </Badge>
                       <Pencil
                         onClick={() => onEdit(lesson.id)}

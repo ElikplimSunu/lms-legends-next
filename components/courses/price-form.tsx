@@ -11,14 +11,15 @@ import { Pencil, X } from "lucide-react";
 
 interface PriceFormProps {
   initialData: {
-    price: number | null;
+    price_cents: number | null;
   };
   courseId: string;
 }
 
 export function PriceForm({ initialData, courseId }: PriceFormProps) {
   const [isEditing, setIsEditing] = useState(false);
-  const [price, setPrice] = useState(initialData.price !== null ? initialData.price.toString() : "0");
+  const priceInDollars = initialData.price_cents !== null ? (initialData.price_cents / 100) : 0;
+  const [price, setPrice] = useState(priceInDollars.toString());
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
 
@@ -62,7 +63,7 @@ export function PriceForm({ initialData, courseId }: PriceFormProps) {
       </div>
       {!isEditing && (
         <p className="text-sm text-zinc-600 mt-2">
-           {initialData.price === 0 || initialData.price === null ? "Free" : `$${initialData.price.toFixed(2)}`}
+           {initialData.price_cents === 0 || initialData.price_cents === null ? "Free" : `$${(initialData.price_cents / 100).toFixed(2)}`}
         </p>
       )}
       {isEditing && (

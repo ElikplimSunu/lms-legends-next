@@ -15,8 +15,9 @@ export const metadata = {
 export default async function LessonSetupPage({
   params
 }: {
-  params: { courseId: string; moduleId: string; lessonId: string }
+  params: Promise<{ courseId: string; moduleId: string; lessonId: string }>
 }) {
+  const { courseId, moduleId, lessonId } = await params;
   const supabase = await createServerClient();
   const { data: { user } } = await supabase.auth.getUser();
 
@@ -28,18 +29,18 @@ export default async function LessonSetupPage({
   const { data: lesson, error } = await supabase
     .from("lessons")
     .select("*, modules(course_id)")
-    .eq("id", params.lessonId)
+    .eq("id", lessonId)
     .single();
 
   if (error || !lesson) {
-    redirect(`/dashboard/instructor/courses/${params.courseId}/modules/${params.moduleId}`);
+    redirect(`/dashboard/instructor/courses/${courseId}/modules/${moduleId}`);
   }
   
   // Verify Ownership
   const { data: course } = await supabase
       .from("courses")
       .select("id")
-      .eq("id", params.courseId)
+      .eq("id", courseId)
       .eq("instructor_id", user.id)
       .single();
 
@@ -59,7 +60,7 @@ export default async function LessonSetupPage({
 
   return (
     <div className="flex-1 space-y-8 p-8 max-w-6xl mx-auto">
-      <Link href={`/dashboard/instructor/courses/${params.courseId}/modules/${params.moduleId}`}>
+      <Link href={`/dashboard/instructor/courses/${courseId}/modules/${moduleId}`}>
         <Button variant="ghost" className="text-sm font-medium mb-4 -ml-4">
           <ArrowLeft className="mr-2 h-4 w-4" />
           Back to Module
@@ -74,8 +75,8 @@ export default async function LessonSetupPage({
           </span>
         </div>
         <div className="flex items-center gap-x-2">
-          <Button disabled={!isComplete} variant={lesson.is_published ? "outline" : "default"}>
-            {lesson.is_published ? "Unpublish" : "Publish"}
+          <Button disabled={!isComplete} variant="default">
+            Settings
           </Button>
         </div>
       </div>
@@ -93,16 +94,16 @@ export default async function LessonSetupPage({
             <div className="space-y-6">
               <LessonTitleForm 
                 initialData={lesson}
-                moduleId={params.moduleId}
-                courseId={params.courseId}
-                lessonId={params.lessonId}
+                moduleId={moduleId}
+                courseId={courseId}
+                lessonId={lessonId}
               />
               
               <LessonDescriptionForm 
                 initialData={lesson}
-                moduleId={params.moduleId}
-                courseId={params.courseId}
-                lessonId={params.lessonId}
+                moduleId={moduleId}
+                courseId={courseId}
+                lessonId={lessonId}
               />
             </div>
 
@@ -121,12 +122,8 @@ export default async function LessonSetupPage({
             {!lesson.video_url ? (
                 <VideoUploader 
                   lessonId={lesson.id}
-                  courseId={params.courseId}
+                  courseId={courseId}
                   onSuccess={() => {
-                    // Force a hard refresh to grab the updated lesson payload 
-                    // after webhook fires (in reality this might take a few seconds 
-                    // for Mux to process and hit our webhook, we can poll or rely on a toast later).
-                    // For now, simple router refresh.
                   }}
                 />
             ) : (
@@ -134,8 +131,8 @@ export default async function LessonSetupPage({
                     {lesson.mux_playback_id ? (
                         <VideoPlayer 
                           playbackId={lesson.mux_playback_id}
-                          courseId={params.courseId}
-                          lessonId={params.lessonId}
+                          courseId={courseId}
+                          lessonId={lessonId}
                         />
                     ) : (
                         <div className="aspect-video bg-zinc-100 dark:bg-zinc-900 rounded-md flex items-center justify-center">

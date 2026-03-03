@@ -10,7 +10,6 @@ const courseSchema = z.object({
     description: z.string().optional(),
     category_id: z.string().uuid("Invalid category").optional().or(z.literal("")),
     price: z.coerce.number().min(0, "Price cannot be negative").default(0),
-    is_published: z.boolean().default(false),
 });
 
 export async function createCourseAction(
@@ -40,8 +39,12 @@ export async function createCourseAction(
         const { data: course, error } = await supabase
             .from("courses")
             .insert({
-                ...validatedData,
+                title: validatedData.title,
+                description: validatedData.description || null,
+                category_id: validatedData.category_id || null,
+                price_cents: Math.round(validatedData.price * 100),
                 slug,
+                status: 'draft' as const,
                 instructor_id: user.id,
             })
             .select()
@@ -83,14 +86,25 @@ export async function updateCourseAction(
             description: formData.get("description"),
             category_id: formData.get("category_id") || undefined,
             price: formData.get("price"),
-            is_published: formData.get("is_published") === "on",
         };
 
         const validatedData = courseSchema.parse(rawData);
+        const publishAction = formData.get("status") as string | null;
+
+        const updateData: Record<string, any> = {
+            title: validatedData.title,
+            description: validatedData.description || null,
+            category_id: validatedData.category_id || null,
+            price_cents: Math.round(validatedData.price * 100),
+        };
+
+        if (publishAction) {
+            updateData.status = publishAction;
+        }
 
         const { error } = await supabase
             .from("courses")
-            .update(validatedData)
+            .update(updateData)
             .eq("id", courseId)
             .eq("instructor_id", user.id); // Security: ensure they own it
 
@@ -130,5 +144,34 @@ export async function deleteCourseAction(courseId: string): Promise<ActionResult
     }
 
     revalidatePath("/dashboard/instructor/courses");
+    return { success: true, data: undefined };
+}
+
+export async function toggleCoursePublishAction(
+    courseId: string,
+    publish: boolean
+): Promise<ActionResult> {
+    const supabase = await createServerClient();
+    const { data: { user } } = await supabase.auth.getUser();
+
+    if (!user) {
+        return { success: false, error: "Not authenticated" };
+    }
+
+    const newStatus = publish ? "published" : "draft";
+
+    const { error } = await supabase
+        .from("courses")
+        .update({ status: newStatus })
+        .eq("id", courseId)
+        .eq("instructor_id", user.id);
+
+    if (error) {
+        return { success: false, error: error.message };
+    }
+
+    revalidatePath(`/dashboard/instructor/courses/${courseId}`);
+    revalidatePath("/dashboard/instructor/courses");
+    revalidatePath("/courses");
     return { success: true, data: undefined };
 }

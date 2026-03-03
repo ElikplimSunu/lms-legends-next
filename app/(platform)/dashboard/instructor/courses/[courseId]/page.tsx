@@ -15,8 +15,9 @@ export const metadata = {
 export default async function CourseSetupPage({
   params
 }: {
-  params: { courseId: string }
+  params: Promise<{ courseId: string }>
 }) {
+  const { courseId } = await params;
   const supabase = await createServerClient();
   const { data: { user } } = await supabase.auth.getUser();
 
@@ -27,7 +28,7 @@ export default async function CourseSetupPage({
   // Double check instructor role & get course details (now including modules)
   const [profileResult, courseResult] = await Promise.all([
     supabase.from("profiles").select("role").eq("id", user.id).single(),
-    supabase.from("courses").select("*, categories(*), modules(*)").eq("id", params.courseId).eq("instructor_id", user.id).single()
+    supabase.from("courses").select("*, categories(*), modules(*)").eq("id", courseId).eq("instructor_id", user.id).single()
   ]);
 
   if (profileResult.data?.role !== "instructor" || !courseResult.data) {
@@ -36,12 +37,13 @@ export default async function CourseSetupPage({
 
   const course = courseResult.data;
 
+  const isPublished = course.status === 'published';
+
   // Let's determine how robust this course is before we let them publish it
   const requiredFields = [
     course.title,
     course.description,
-    course.price !== null,
-    // in the future, we will want to check if they have at least 1 published module/lesson
+    course.price_cents !== null,
   ];
   
   const totalFields = requiredFields.length;
@@ -66,9 +68,8 @@ export default async function CourseSetupPage({
           </span>
         </div>
         <div className="flex items-center gap-x-2">
-          {/* Publish or Unpublish Action (will be a small form in the future) */}
-          <Button disabled={!isComplete} variant={course.is_published ? "outline" : "default"}>
-            {course.is_published ? "Unpublish" : "Publish"}
+          <Button disabled={!isComplete} variant={isPublished ? "outline" : "default"}>
+            {isPublished ? "Unpublish" : "Publish"}
           </Button>
         </div>
       </div>
@@ -102,7 +103,7 @@ export default async function CourseSetupPage({
             </div>
             
             <ModulesForm 
-                initialData={course.modules.sort((a: any, b: any) => a.position - b.position)}
+                initialData={course.modules.sort((a: any, b: any) => a.sort_order - b.sort_order)}
                 courseId={course.id}
             />
            </div>

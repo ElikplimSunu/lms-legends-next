@@ -4,16 +4,25 @@ import Image from "next/image";
 import { BookOpen, Lock, PlayCircle } from "lucide-react";
 import { EnrollButton } from "@/components/courses/enroll-button";
 
+// Helper to check if a string looks like a UUID
+function isUUID(str: string) {
+  return /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(str);
+}
+
 export async function generateMetadata({
   params,
 }: {
-  params: { courseId: string };
+  params: Promise<{ courseId: string }>;
 }) {
+  const { courseId } = await params;
   const supabase = await createServerClient();
+
+  const col = isUUID(courseId) ? "id" : "slug";
   const { data: course } = await supabase
     .from("courses")
     .select("title, short_description")
-    .eq("id", params.courseId)
+    .eq(col, courseId)
+    .eq("status", "published")
     .single();
 
   return {
@@ -27,8 +36,9 @@ export async function generateMetadata({
 export default async function CourseDetailPage({
   params,
 }: {
-  params: { courseId: string };
+  params: Promise<{ courseId: string }>;
 }) {
+  const { courseId } = await params;
   const supabase = await createServerClient();
   const {
     data: { user },
@@ -36,6 +46,7 @@ export default async function CourseDetailPage({
 
   if (!user) redirect("/login");
 
+  const col = isUUID(courseId) ? "id" : "slug";
   const { data: course, error } = await supabase
     .from("courses")
     .select(
@@ -48,7 +59,8 @@ export default async function CourseDetailPage({
       )
     `
     )
-    .eq("id", params.courseId)
+    .eq(col, courseId)
+    .eq("status", "published")
     .single();
 
   if (error || !course) redirect("/courses");

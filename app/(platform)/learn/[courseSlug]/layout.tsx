@@ -9,8 +9,9 @@ export default async function LearnCourseLayout({
   params,
 }: {
   children: React.ReactNode;
-  params: { courseSlug: string };
+  params: Promise<{ courseSlug: string }>;
 }) {
+  const { courseSlug } = await params;
   const supabase = await createServerClient();
   const {
     data: { user },
@@ -30,7 +31,7 @@ export default async function LearnCourseLayout({
       )
     `
     )
-    .eq("slug", params.courseSlug)
+    .eq("slug", courseSlug)
     .single();
 
   if (!course) redirect("/courses");

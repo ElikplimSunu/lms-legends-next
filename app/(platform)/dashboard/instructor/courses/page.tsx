@@ -70,14 +70,14 @@ export default async function InstructorCoursesPage() {
                   <h3 className="font-bold text-lg mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400">
                     {course.title}
                   </h3>
-                  {course.is_published ? (
+                  {course.status === 'published' ? (
                     <span className="flex items-center text-xs font-semibold text-green-600 bg-green-50 px-2 py-1 rounded-full dark:bg-green-900/20 dark:text-green-400">
                       <CheckCircle2 className="w-3 h-3 mr-1" />
                       Published
                     </span>
                   ) : (
                     <span className="text-xs font-semibold text-amber-600 bg-amber-50 px-2 py-1 rounded-full dark:bg-amber-900/20 dark:text-amber-400">
-                      Draft
+                      {course.status === 'draft' ? 'Draft' : course.status === 'pending_review' ? 'Pending' : 'Archived'}
                     </span>
                   )}
                 </div>
@@ -87,7 +87,7 @@ export default async function InstructorCoursesPage() {
               </div>
               <div className="mt-6 flex items-center justify-between text-sm text-zinc-500">
                 <span className="font-medium text-zinc-900 dark:text-zinc-50">
-                  ${course.price.toFixed(2)}
+                  {course.price_cents ? `$${(course.price_cents / 100).toFixed(2)}` : 'Free'}
                 </span>
                 <span>
                   {new Date(course.created_at).toLocaleDateString()}

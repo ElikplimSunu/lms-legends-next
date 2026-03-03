@@ -15,15 +15,15 @@ export function CourseCard({ course, progress }: CourseCardProps) {
   }, 0) || 0;
 
   return (
-    <Link href={`/courses/${course.id}`}>
+    <Link href={`/courses/${course.slug || course.id}`}>
       <div className="group hover:shadow-sm transition overflow-hidden border border-zinc-200 dark:border-zinc-800 rounded-xl bg-white dark:bg-zinc-950 h-full flex flex-col">
         <div className="relative w-full aspect-video rounded-t-xl overflow-hidden bg-zinc-100 dark:bg-zinc-900">
-          {course.image_url ? (
+          {course.thumbnail_url ? (
             <Image
               fill
               className="object-cover"
               alt={course.title}
-              src={course.image_url}
+              src={course.thumbnail_url}
             />
           ) : (
              <div className="w-full h-full flex items-center justify-center text-zinc-400">
@@ -59,12 +59,12 @@ export function CourseCard({ course, progress }: CourseCardProps) {
                 </div>
               ) : (
                 <p className="text-md md:text-sm font-semibold text-zinc-800 dark:text-zinc-200">
-                  {course.price === 0 || !course.price ? (
+                  {course.price_cents === 0 || !course.price_cents ? (
                       <Badge variant="outline" className="bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-900/20 dark:text-emerald-400 dark:border-emerald-900/30">
                           Free
                       </Badge>
                   ) : (
-                      `$${course.price.toFixed(2)}`
+                      `$${(course.price_cents / 100).toFixed(2)}`
                   )}
                 </p>
               )}

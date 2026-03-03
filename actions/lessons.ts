@@ -45,13 +45,13 @@ export async function createLessonAction(
         // Determine the next position (max position + 1)
         const { data: existingLessons } = await supabase
             .from("lessons")
-            .select("position")
+            .select("sort_order")
             .eq("module_id", validatedData.module_id)
-            .order("position", { ascending: false })
+            .order("sort_order", { ascending: false })
             .limit(1);
 
-        const position = existingLessons && existingLessons.length > 0
-            ? existingLessons[0].position + 1
+        const sort_order = existingLessons && existingLessons.length > 0
+            ? existingLessons[0].sort_order + 1
             : 0;
 
         const { data: newLesson, error } = await supabase
@@ -59,10 +59,7 @@ export async function createLessonAction(
             .insert({
                 title: validatedData.title,
                 module_id: validatedData.module_id,
-                course_id: courseId, // Adding course_id for easier querying later, even though it's technically denormalized. Wait, does our schema have course_id on lessons?
-                // Let's assume the schema was created properly. If the schema doesn't have course_id, we just insert module_id.
-                // Actually looking at 00001_initial_schema.sql, lessons only have module_id.
-                position,
+                sort_order,
             })
             .select()
             .single();
@@ -97,9 +94,8 @@ export async function updateLessonAction(
 
     try {
         const title = formData.get("title") as string | null;
-        const is_published = formData.get("is_published") as string | null;
         const description = formData.get("description") as string | null;
-        const is_free = formData.get("is_free") as string | null;
+        const is_free_preview = formData.get("is_free_preview") as string | null;
         const video_url = formData.get("video_url") as string | null;
 
         // Verify ownership via course
@@ -116,9 +112,8 @@ export async function updateLessonAction(
 
         const updates: any = {};
         if (title !== null) updates.title = title;
-        if (is_published !== null) updates.is_published = is_published === "true";
         if (description !== null) updates.description = description;
-        if (is_free !== null) updates.is_free = is_free === "true";
+        if (is_free_preview !== null) updates.is_free_preview = is_free_preview === "true";
         if (video_url !== null) updates.video_url = video_url;
 
         // We don't update video details (Mux) directly this way, they come from webhooks usually, or a dedicated update method.
@@ -170,7 +165,7 @@ export async function reorderLessonsAction(
         const promises = updateData.map((update) =>
             supabase
                 .from("lessons")
-                .update({ position: update.position })
+                .update({ sort_order: update.position })
                 .eq("id", update.id)
                 .eq("module_id", moduleId)
         );

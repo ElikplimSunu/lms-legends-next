@@ -13,8 +13,9 @@ export const metadata = {
 export default async function ModuleSetupPage({
   params
 }: {
-  params: { courseId: string; moduleId: string }
+  params: Promise<{ courseId: string; moduleId: string }>
 }) {
+  const { courseId, moduleId } = await params;
   const supabase = await createServerClient();
   const { data: { user } } = await supabase.auth.getUser();
 
@@ -25,7 +26,7 @@ export default async function ModuleSetupPage({
   // Double check instructor role & get module details
   const [profileResult, moduleResult] = await Promise.all([
     supabase.from("profiles").select("role").eq("id", user.id).single(),
-    supabase.from("modules").select("*, lessons(*)").eq("id", params.moduleId).eq("course_id", params.courseId).single()
+    supabase.from("modules").select("*, lessons(*)").eq("id", moduleId).eq("course_id", courseId).single()
   ]);
 
   // Auth & ownership check
@@ -34,19 +35,19 @@ export default async function ModuleSetupPage({
     // The modules query using the course_id ensures it belongs to the URL course, 
     // but the instructor_id check on the course itself is important. 
     // We can do another quick check.
-    const courseCheck = await supabase.from("courses").select("id").eq("id", params.courseId).eq("instructor_id", user.id).single();
+    const courseCheck = await supabase.from("courses").select("id").eq("id", courseId).eq("instructor_id", user.id).single();
     if (!courseCheck.data) {
        redirect("/dashboard/instructor/courses");
     }
   } else if (profileResult.data?.role === "instructor" && moduleResult.data) {
-      const courseCheck = await supabase.from("courses").select("id").eq("id", params.courseId).eq("instructor_id", user.id).single();
+      const courseCheck = await supabase.from("courses").select("id").eq("id", courseId).eq("instructor_id", user.id).single();
       if (!courseCheck.data) {
          redirect("/dashboard/instructor/courses");
       }
   }
 
   if(!moduleResult.data) {
-      redirect(`/dashboard/instructor/courses/${params.courseId}`);
+      redirect(`/dashboard/instructor/courses/${courseId}`);
   }
 
   const courseModule = moduleResult.data;
@@ -63,7 +64,7 @@ export default async function ModuleSetupPage({
 
   return (
     <div className="flex-1 space-y-8 p-8 max-w-6xl mx-auto">
-      <Link href={`/dashboard/instructor/courses/${params.courseId}`}>
+      <Link href={`/dashboard/instructor/courses/${courseId}`}>
         <Button variant="ghost" className="text-sm font-medium mb-4 -ml-4">
           <ArrowLeft className="mr-2 h-4 w-4" />
           Back to Course Setup
@@ -78,8 +79,8 @@ export default async function ModuleSetupPage({
           </span>
         </div>
         <div className="flex items-center gap-x-2">
-          <Button disabled={!isComplete} variant={courseModule.is_published ? "outline" : "default"}>
-            {courseModule.is_published ? "Unpublish" : "Publish"}
+          <Button disabled={!isComplete} variant="default">
+            Settings
           </Button>
         </div>
       </div>
@@ -97,8 +98,8 @@ export default async function ModuleSetupPage({
             <div className="space-y-6">
               <ModuleTitleForm 
                 initialData={courseModule}
-                courseId={params.courseId}
-                moduleId={params.moduleId}
+                courseId={courseId}
+                moduleId={moduleId}
               />
             </div>
 
@@ -124,9 +125,9 @@ export default async function ModuleSetupPage({
                {/* Lessons Builder */}
                <h2 className="text-xl font-bold mb-6">Lessons</h2>
                <LessonsForm
-                 initialData={courseModule.lessons.sort((a: any, b: any) => a.position - b.position)}
-                 moduleId={params.moduleId}
-                 courseId={params.courseId}
+                 initialData={courseModule.lessons.sort((a: any, b: any) => a.sort_order - b.sort_order)}
+                 moduleId={moduleId}
+                 courseId={courseId}
                />
            </div>
         </div>

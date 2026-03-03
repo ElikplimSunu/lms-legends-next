@@ -12,7 +12,7 @@ export const metadata = {
 export default async function CoursesPage({
   searchParams,
 }: {
-  searchParams: { title?: string; categoryId?: string };
+  searchParams: Promise<{ title?: string; categoryId?: string }>;
 }) {
   const supabase = await createServerClient();
   const { data: { user } } = await supabase.auth.getUser();
@@ -21,12 +21,12 @@ export default async function CoursesPage({
     redirect("/login");
   }
 
-  const { title, categoryId } = searchParams;
+  const { title, categoryId } = await searchParams;
 
   let query = supabase
     .from("courses")
     .select("*, categories(*), modules(id, lessons(id))")
-    .eq("is_published", true);
+    .eq("status", "published");
 
   if (title) {
     query = query.ilike("title", `%${title}%`);

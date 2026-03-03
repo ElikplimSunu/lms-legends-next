@@ -4,8 +4,9 @@ import { redirect } from "next/navigation";
 export default async function LearnCourseOverviewPage({
   params,
 }: {
-  params: { courseSlug: string };
+  params: Promise<{ courseSlug: string }>;
 }) {
+  const { courseSlug } = await params;
   const supabase = await createServerClient();
   const {
     data: { user },
@@ -25,7 +26,7 @@ export default async function LearnCourseOverviewPage({
       )
     `
     )
-    .eq("slug", params.courseSlug)
+    .eq("slug", courseSlug)
     .single();
 
   if (!course) redirect("/courses");
@@ -56,7 +57,7 @@ export default async function LearnCourseOverviewPage({
   }
 
   if (firstLessonId) {
-    redirect(`/learn/${params.courseSlug}/lessons/${firstLessonId}`);
+    redirect(`/learn/${courseSlug}/lessons/${firstLessonId}`);
   }
 
   return (

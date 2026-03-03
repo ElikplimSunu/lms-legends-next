@@ -6,13 +6,14 @@ import { generateMuxPlaybackToken } from "@/lib/mux/tokens";
 export async function generateMetadata({
   params,
 }: {
-  params: { courseSlug: string; lessonId: string };
+  params: Promise<{ courseSlug: string; lessonId: string }>;
 }) {
+  const { lessonId } = await params;
   const supabase = await createServerClient();
   const { data: lesson } = await supabase
     .from("lessons")
     .select("title")
-    .eq("id", params.lessonId)
+    .eq("id", lessonId)
     .single();
 
   return {
@@ -25,8 +26,9 @@ export async function generateMetadata({
 export default async function LessonPage({
   params,
 }: {
-  params: { courseSlug: string; lessonId: string };
+  params: Promise<{ courseSlug: string; lessonId: string }>;
 }) {
+  const { courseSlug, lessonId } = await params;
   const supabase = await createServerClient();
   const {
     data: { user },
@@ -47,11 +49,11 @@ export default async function LessonPage({
       lesson_attachments (*)
     `
     )
-    .eq("id", params.lessonId)
+    .eq("id", lessonId)
     .single();
 
   if (error || !lesson) {
-    redirect(`/learn/${params.courseSlug}`);
+    redirect(`/learn/${courseSlug}`);
   }
 
   const courseId = (lesson.modules as any).courses.id;
@@ -112,7 +114,7 @@ export default async function LessonPage({
   return (
     <LessonPlayer
       lesson={lesson}
-      courseSlug={params.courseSlug}
+      courseSlug={courseSlug}
       courseId={courseId}
       isEnrolled={isEnrolled}
       initialPosition={progress?.last_position_seconds || 0}
