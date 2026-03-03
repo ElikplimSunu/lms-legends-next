@@ -8,6 +8,7 @@ import { DescriptionForm } from "@/components/courses/description-form";
 import { PriceForm } from "@/components/courses/price-form";
 import { ModulesForm } from "@/components/courses/modules-form";
 import { PublishButton } from "@/components/courses/publish-button";
+import { ThumbnailUpload } from "@/components/courses/thumbnail-upload";
 
 export const metadata = {
   title: "Course Setup | LMS Legends",
@@ -90,6 +91,7 @@ export default async function CourseSetupPage({
             <div className="space-y-6">
               <TitleForm initialData={course} courseId={course.id} />
               <DescriptionForm initialData={course} courseId={course.id} />
+              <ThumbnailUpload courseId={course.id} currentUrl={course.thumbnail_url} />
               <PriceForm initialData={course} courseId={course.id} />
             </div>
 

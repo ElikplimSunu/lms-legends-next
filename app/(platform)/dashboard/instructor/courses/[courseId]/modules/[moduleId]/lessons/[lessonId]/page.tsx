@@ -7,6 +7,8 @@ import { LessonTitleForm } from "@/components/lessons/lesson-title-form";
 import { LessonDescriptionForm } from "@/components/lessons/lesson-description-form";
 import { VideoUploader } from "@/components/lessons/video-uploader";
 import { VideoPlayer } from "@/components/lessons/video-player";
+import { FileUpload } from "@/components/lessons/file-upload";
+import { File as FileIcon } from "lucide-react";
 
 export const metadata = {
   title: "Lesson Setup | LMS Legends",
@@ -28,7 +30,7 @@ export default async function LessonSetupPage({
   // Get the lesson directly
   const { data: lesson, error } = await supabase
     .from("lessons")
-    .select("*, modules(course_id)")
+    .select("*, modules(course_id), lesson_attachments(*)")
     .eq("id", lessonId)
     .single();
 
@@ -164,6 +166,33 @@ export default async function LessonSetupPage({
                  {/* Free preview toggle placeholder */}
                  <p className="text-sm font-medium">Free Preview</p>
                  <p className="text-xs text-zinc-500 mt-1">Check this box if you want to make this lesson free for preview.</p>
+              </div>
+           </div>
+
+           {/* Attachments */}
+           <div>
+              <div className="flex items-center gap-x-2 mb-6">
+                <div className="p-2 bg-blue-100 dark:bg-blue-900 rounded-full text-blue-600 dark:text-blue-400">
+                  <FileIcon className="h-6 w-6" />
+                </div>
+                <h2 className="text-xl font-bold">Attachments</h2>
+              </div>
+              
+              <div className="rounded-xl border border-zinc-200 bg-white p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-950 space-y-4">
+                {(lesson.lesson_attachments || []).length > 0 && (
+                  <div className="space-y-2">
+                    {(lesson.lesson_attachments as any[]).map((att: any) => (
+                      <div key={att.id} className="flex items-center gap-2 text-sm p-2 bg-zinc-50 dark:bg-zinc-900 rounded-md">
+                        <FileIcon className="w-4 h-4 text-blue-500" />
+                        <a href={att.file_url} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline truncate">
+                          {att.file_name || "Attachment"}
+                        </a>
+                      </div>
+                    ))}
+                  </div>
+                )}
+                <FileUpload lessonId={lessonId} />
+                <p className="text-xs text-zinc-500">Upload PDFs, documents, or other reference materials for this lesson.</p>
               </div>
            </div>
         </div>
