@@ -7,6 +7,7 @@ import { TitleForm } from "@/components/courses/title-form";
 import { DescriptionForm } from "@/components/courses/description-form";
 import { PriceForm } from "@/components/courses/price-form";
 import { ModulesForm } from "@/components/courses/modules-form";
+import { PublishButton } from "@/components/courses/publish-button";
 
 export const metadata = {
   title: "Course Setup | LMS Legends",
@@ -68,9 +69,11 @@ export default async function CourseSetupPage({
           </span>
         </div>
         <div className="flex items-center gap-x-2">
-          <Button disabled={!isComplete} variant={isPublished ? "outline" : "default"}>
-            {isPublished ? "Unpublish" : "Publish"}
-          </Button>
+          <PublishButton
+            courseId={course.id}
+            isPublished={isPublished}
+            disabled={!isComplete}
+          />
         </div>
       </div>
 
