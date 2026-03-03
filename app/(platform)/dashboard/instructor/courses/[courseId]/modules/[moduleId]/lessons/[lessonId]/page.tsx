@@ -8,6 +8,7 @@ import { LessonDescriptionForm } from "@/components/lessons/lesson-description-f
 import { VideoUploader } from "@/components/lessons/video-uploader";
 import { VideoPlayer } from "@/components/lessons/video-player";
 import { FileUpload } from "@/components/lessons/file-upload";
+import { FreePreviewToggle } from "@/components/lessons/free-preview-toggle";
 import { File as FileIcon } from "lucide-react";
 
 export const metadata = {
@@ -161,9 +162,12 @@ export default async function LessonSetupPage({
               </div>
               
               <div className="rounded-xl border border-zinc-200 bg-white p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-950">
-                 {/* Free preview toggle placeholder */}
-                 <p className="text-sm font-medium">Free Preview</p>
-                 <p className="text-xs text-zinc-500 mt-1">Check this box if you want to make this lesson free for preview.</p>
+                 <FreePreviewToggle
+                   lessonId={lessonId}
+                   moduleId={moduleId}
+                   courseId={courseId}
+                   initialValue={lesson.is_free_preview || false}
+                 />
               </div>
            </div>
 

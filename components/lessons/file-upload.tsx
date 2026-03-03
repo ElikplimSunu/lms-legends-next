@@ -1,9 +1,10 @@
 "use client";
 
-import { useState, useRef, useTransition } from "react";
+import { useRef, useTransition } from "react";
 import { FileUp, X, File } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 interface FileUploadProps {
   lessonId: string;
@@ -13,6 +14,7 @@ interface FileUploadProps {
 export function FileUpload({ lessonId, onUploaded }: FileUploadProps) {
   const [isPending, startTransition] = useTransition();
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const router = useRouter();
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -37,8 +39,10 @@ export function FileUpload({ lessonId, onUploaded }: FileUploadProps) {
         const data = await res.json();
         onUploaded?.(data);
         toast.success("File uploaded");
+        router.refresh();
       } else {
-        toast.error("Upload failed");
+        const errData = await res.json().catch(() => null);
+        toast.error(errData?.error || "Upload failed");
       }
     });
   };
