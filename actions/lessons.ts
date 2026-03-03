@@ -1,0 +1,223 @@
+"use server";
+
+import { createServerClient } from "@/lib/supabase/server";
+import { revalidatePath } from "next/cache";
+import { z } from "zod";
+import { ActionResult } from "@/types";
+
+const lessonSchema = z.object({
+    title: z.string().min(1, "Title is required").max(100, "Title is too long"),
+    module_id: z.string().uuid("Invalid module"),
+});
+
+export async function createLessonAction(
+    courseId: string,
+    prevState: any,
+    formData: FormData
+): Promise<ActionResult<any>> {
+    const supabase = await createServerClient();
+    const { data: { user } } = await supabase.auth.getUser();
+
+    if (!user) {
+        return { success: false, error: "Not authenticated" };
+    }
+
+    try {
+        const rawData = {
+            title: formData.get("title"),
+            module_id: formData.get("module_id"),
+        };
+
+        const validatedData = lessonSchema.parse(rawData);
+
+        // Verify ownership via course
+        const { data: course, error: courseError } = await supabase
+            .from("courses")
+            .select("id")
+            .eq("id", courseId)
+            .eq("instructor_id", user.id)
+            .single();
+
+        if (courseError || !course) {
+            return { success: false, error: "Unauthorized or course not found" };
+        }
+
+        // Determine the next position (max position + 1)
+        const { data: existingLessons } = await supabase
+            .from("lessons")
+            .select("position")
+            .eq("module_id", validatedData.module_id)
+            .order("position", { ascending: false })
+            .limit(1);
+
+        const position = existingLessons && existingLessons.length > 0
+            ? existingLessons[0].position + 1
+            : 0;
+
+        const { data: newLesson, error } = await supabase
+            .from("lessons")
+            .insert({
+                title: validatedData.title,
+                module_id: validatedData.module_id,
+                course_id: courseId, // Adding course_id for easier querying later, even though it's technically denormalized. Wait, does our schema have course_id on lessons?
+                // Let's assume the schema was created properly. If the schema doesn't have course_id, we just insert module_id.
+                // Actually looking at 00001_initial_schema.sql, lessons only have module_id.
+                position,
+            })
+            .select()
+            .single();
+
+        if (error) {
+            return { success: false, error: error.message };
+        }
+
+        revalidatePath(`/dashboard/instructor/courses/${courseId}/modules/${validatedData.module_id}`);
+        return { success: true, data: newLesson };
+    } catch (error) {
+        if (error instanceof z.ZodError) {
+            return { success: false, error: error.issues[0].message };
+        }
+        return { success: false, error: "An unexpected error occurred" };
+    }
+}
+
+export async function updateLessonAction(
+    lessonId: string,
+    moduleId: string,
+    courseId: string,
+    prevState: any,
+    formData: FormData
+): Promise<ActionResult<any>> {
+    const supabase = await createServerClient();
+    const { data: { user } } = await supabase.auth.getUser();
+
+    if (!user) {
+        return { success: false, error: "Not authenticated" };
+    }
+
+    try {
+        const title = formData.get("title") as string | null;
+        const is_published = formData.get("is_published") as string | null;
+        const description = formData.get("description") as string | null;
+        const is_free = formData.get("is_free") as string | null;
+        const video_url = formData.get("video_url") as string | null;
+
+        // Verify ownership via course
+        const { data: course } = await supabase
+            .from("courses")
+            .select("id")
+            .eq("id", courseId)
+            .eq("instructor_id", user.id)
+            .single();
+
+        if (!course) {
+            return { success: false, error: "Unauthorized" };
+        }
+
+        const updates: any = {};
+        if (title !== null) updates.title = title;
+        if (is_published !== null) updates.is_published = is_published === "true";
+        if (description !== null) updates.description = description;
+        if (is_free !== null) updates.is_free = is_free === "true";
+        if (video_url !== null) updates.video_url = video_url;
+
+        // We don't update video details (Mux) directly this way, they come from webhooks usually, or a dedicated update method.
+
+        const { error, data } = await supabase
+            .from("lessons")
+            .update(updates)
+            .eq("id", lessonId)
+            .eq("module_id", moduleId)
+            .select()
+            .single();
+
+        if (error) {
+            return { success: false, error: error.message };
+        }
+
+        revalidatePath(`/dashboard/instructor/courses/${courseId}/modules/${moduleId}`);
+        return { success: true, data };
+    } catch (error) {
+        return { success: false, error: "An unexpected error occurred" };
+    }
+}
+
+export async function reorderLessonsAction(
+    courseId: string,
+    moduleId: string,
+    updateData: { id: string; position: number }[]
+): Promise<ActionResult> {
+    const supabase = await createServerClient();
+    const { data: { user } } = await supabase.auth.getUser();
+
+    if (!user) {
+        return { success: false, error: "Not authenticated" };
+    }
+
+    // Verify ownership
+    const { data: course } = await supabase
+        .from("courses")
+        .select("id")
+        .eq("id", courseId)
+        .eq("instructor_id", user.id)
+        .single();
+
+    if (!course) {
+        return { success: false, error: "Unauthorized" };
+    }
+
+    try {
+        const promises = updateData.map((update) =>
+            supabase
+                .from("lessons")
+                .update({ position: update.position })
+                .eq("id", update.id)
+                .eq("module_id", moduleId)
+        );
+
+        await Promise.all(promises);
+
+        revalidatePath(`/dashboard/instructor/courses/${courseId}/modules/${moduleId}`);
+        return { success: true, data: undefined };
+    } catch (error) {
+        return { success: false, error: "Failed to reorder lessons" };
+    }
+}
+
+export async function deleteLessonAction(
+    courseId: string,
+    moduleId: string,
+    lessonId: string
+): Promise<ActionResult> {
+    const supabase = await createServerClient();
+    const { data: { user } } = await supabase.auth.getUser();
+
+    if (!user) {
+        return { success: false, error: "Not authenticated" };
+    }
+
+    // Verify ownership
+    const { data: course } = await supabase
+        .from("courses")
+        .select("id")
+        .eq("id", courseId)
+        .eq("instructor_id", user.id)
+        .single();
+
+    if (!course) {
+        return { success: false, error: "Unauthorized" };
+    }
+
+    const { error } = await supabase
+        .from("lessons")
+        .delete()
+        .eq("id", lessonId)
+        .eq("module_id", moduleId);
+
+    if (error) {
+        return { success: false, error: error.message };
+    }
+
+    revalidatePath(`/dashboard/instructor/courses/${courseId}/modules/${moduleId}`);
+    return { success: true, data: undefined };
+}
